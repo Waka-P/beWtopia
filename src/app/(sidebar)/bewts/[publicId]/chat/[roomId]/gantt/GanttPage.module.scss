@@ -1,0 +1,112 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: #c9d1d9;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.2rem;
+  min-width: 0;
+  overflow: hidden;
+
+  &>span {
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+  }
+}
+
+.breadcrumbLink {
+  color: #0ffa;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.projectLink {
+  max-width: min(45vw, 460px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.marqueeText {
+  display: inline;
+}
+
+.marqueeReady:hover {
+  text-overflow: clip;
+}
+
+.marqueeReady:hover .marqueeText {
+  display: inline-block;
+  padding-right: 1.2rem;
+  animation: projectNameMarquee 6s linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes projectNameMarquee {
+
+  0%,
+  12% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  89% {
+    opacity: 1;
+    transform: translateX(calc(-1 * var(--marquee-distance, 0px)));
+  }
+
+  93% {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--marquee-distance, 0px)));
+  }
+
+  94% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  98%,
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.breadcrumbSep {
+  flex-shrink: 0;
+}
+
+.breadcrumbCurrent {
+  margin: 0.05rem 0 0 0 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}

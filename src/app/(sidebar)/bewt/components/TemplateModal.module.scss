@@ -1,0 +1,123 @@
+.templateList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.templateItem {
+  position: relative;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(
+        to right bottom,
+        #f0f8fd03 12%,
+        #dcf4fc1f 21%,
+        #caeefb2d 27%,
+        #d9f3fc00 38%,
+        #edf9fe03 51%,
+        #f8fdff2d 58%,
+        #caeefb03 65%,
+        #ffffff03 75%,
+        #ffffff00 84%,
+        #ffffff22 100%
+      )
+      border-box;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(
+      to right bottom,
+      #f0f8fd03 12%,
+      #dcf4fc1f 21%,
+      #caeefb2d 27%,
+      #d9f3fc00 38%,
+      #edf9fe03 51%,
+      #f8fdff2d 58%,
+      #caeefb03 65%,
+      #ffffff03 75%,
+      #ffffff00 84%,
+      #ffffff22 100%
+    );
+  }
+}
+
+.templateItem:hover {
+  opacity: 0.7;
+}
+
+.templateItem.selected {
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(
+        to right bottom,
+        #00ffff 5%,
+        #14c8ee 50%,
+        #0b8de3 85%,
+        #0251d8 100%
+      )
+      border-box;
+  box-shadow: 0 0 5px 2px rgba(0, 255, 255, 0.8);
+}
+
+.templateItem h4 {
+  color: #0ff;
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.templatePreview {
+  color: #ccc;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.templateCancelBtn,
+.templateInsertBtn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.templateCancelBtn {
+  color: #fff;
+}
+
+.templateCancelBtn:hover {
+  background: rgba(136, 136, 136, 0.3);
+}
+
+.templateInsertBtn {
+  background: linear-gradient(
+    to right bottom,
+    #00ffff 5%,
+    #14c8ee 50%,
+    #0b8de3 85%,
+    #0251d8 100%
+  );
+  color: white;
+  font-weight: bold;
+}
+
+.templateInsertBtn:disabled {
+  background: rgba(136, 136, 136, 0.2);
+  color: #666;
+  cursor: not-allowed;
+}
+
+.templateInsertBtn:not(:disabled):hover {
+  opacity: 0.9;
+}

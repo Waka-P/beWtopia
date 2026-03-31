@@ -1,0 +1,59 @@
+.wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  width: 100%;
+  z-index: 99999;
+  background-color: #00091a;
+}
+
+.logo {
+  width: 300px;
+  height: auto;
+  margin-bottom: 6rem;
+}
+
+.icon {
+  width: 60px;
+  height: auto;
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.message {
+  margin-bottom: 4rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #888;
+}
+
+.homeLink {
+  padding: 0.8rem 1.2rem;
+  text-align: center;
+  border-radius: 9999px;
+  border: 1.5px solid transparent;
+  background: linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(155deg, var(--gradient-primary-colors)) border-box;
+  color: #e5e7eb;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+
+  &:active {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+}

@@ -1,0 +1,16 @@
+.logoutImage {
+  width: 40px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logoutImage:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.logoutImage:active {
+  transform: scale(1.05);
+  transition: transform 0.1s ease;
+}

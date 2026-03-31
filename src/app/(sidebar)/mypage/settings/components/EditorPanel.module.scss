@@ -1,0 +1,208 @@
+.editorPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 350px;
+  height: 100%;
+  border-radius: 18px;
+  background: linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(to right bottom, var(--gradient-primary-colors)) border-box;
+  border: 2px solid transparent;
+  padding: 2rem;
+}
+
+.editorHeader {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 0.8rem;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.formRow label {
+  color: var(--accent);
+}
+
+.formRow input {
+  --gradient-angle: 135deg;
+  width: 100%;
+  padding: 0.4rem 0.75rem;
+  line-height: normal;
+  text-align: left;
+  border: 1.9px solid transparent;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  outline: none;
+  color: white;
+
+  &::placeholder {
+    color: #888;
+  }
+
+  &:read-only {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  margin-top: 12px;
+}
+
+.cardSkeletonWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.cardSkeletonLine {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background: #020713;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg,
+        #020713 0%,
+        rgba(0, 255, 255, 0.22) 20%,
+        rgba(0, 255, 255, 0.5) 38%,
+        rgba(0, 255, 255, 0.22) 60%,
+        #020713 100%);
+    transform: translateX(-100%);
+    animation: card-skeleton-shimmer 1.4s ease-in-out infinite;
+  }
+}
+
+.cardSkeletonLineLarge {
+  height: 56px;
+}
+
+.cardSkeletonLineSmall {
+  height: 18px;
+  width: 40%;
+  align-self: flex-end;
+}
+
+.cardSkeletonLineLabel {
+  height: 14px;
+  width: 32%;
+  align-self: flex-start;
+}
+
+.cardSkeletonLineField {
+  height: 52px;
+  width: 100%;
+}
+
+.cardSkeletonFieldRow {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.cardSkeletonLineFieldHalf {
+  height: 52px;
+  width: 50%;
+}
+
+.cardSkeletonLineHelper {
+  height: 12px;
+  width: 60%;
+  align-self: flex-start;
+}
+
+.cardSkeletonButtonRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.cardSkeletonButtonGhost {
+  height: 32px;
+  width: 92px;
+  border-radius: 999px;
+}
+
+.cardSkeletonButtonPrimary {
+  height: 32px;
+  width: 120px;
+  border-radius: 999px;
+}
+
+@keyframes card-skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.btnPrimary {
+  padding: 0.6rem 1.2rem;
+  text-align: center;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.25s ease;
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &:not(.disabled):not(:disabled):hover {
+    transform: scale(1.03);
+  }
+
+  &:not(.disabled):not(:disabled):active {
+    transform: scale(1.01);
+  }
+}
+
+.btnGhost {
+  padding: 0.6rem 1.2rem;
+  text-align: center;
+  border: none;
+  border-radius: 50px;
+  background: transparent;
+  color: #ddd;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

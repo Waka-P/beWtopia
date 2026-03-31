@@ -1,0 +1,82 @@
+ .header {
+   position: relative;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+   height: 70px;
+   flex-shrink: 0;
+   background: linear-gradient(to bottom, #00091a 10%, #00091aee 100%);
+   box-shadow: 0 2px 10px #00091a;
+   z-index: 100;
+ }
+
+ .logoLink {
+   display: inline-flex;
+   align-items: center;
+   margin: 0 15px;
+ }
+
+ .logoImage {
+   width: 45px;
+   height: auto;
+   transition: transform 0.3s ease;
+ }
+
+ .logoLink:hover .logoImage {
+   transform: scale(1.05);
+   transition: transform 0.3s ease;
+ }
+
+ .logoLink:active .logoImage {
+   transform: scale(1);
+   transition: transform 0.1s ease;
+ }
+
+ .rightTop {
+   display: flex;
+   align-items: flex-end;
+   gap: 30px;
+   height: 100%;
+   margin: 0 25px 0 0;
+ }
+
+ .cartLink {
+   position: relative;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   transition: transform 0.3s ease;
+ }
+
+ .cartImage {
+   width: 50px;
+   height: auto;
+ }
+
+ .cartLink:hover {
+   transform: scale(1.1);
+   transition: transform 0.3s ease;
+ }
+
+ .cartLink:active {
+   transform: scale(1.05);
+   transition: transform 0.1s ease;
+ }
+
+ .purchaseQuantity {
+   position: absolute;
+   top: -0.5rem;
+   right: -0.5rem;
+   width: 1.5rem;
+   height: 1.5rem;
+   z-index: 10;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+
+ .logoutButtonWrapper {
+   display: flex;
+   align-items: center;
+ }

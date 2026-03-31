@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `chat_message_attachments` ADD COLUMN `f_display_order` INTEGER NULL;

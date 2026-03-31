@@ -1,0 +1,182 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.appInfo {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 5rem;
+}
+
+.appInfoLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 300px;
+  flex: 0 0 auto;
+  max-width: 300px;
+}
+
+.appIconWrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.appIcon {
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+.appName {
+  min-width: 0;
+  max-width: 300px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: anywhere;
+}
+
+// レビューカード
+.reviewItem {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: anywhere;
+
+  &.detail {
+
+    .reviewAvatar {
+      width: 70px;
+      height: 70px;
+    }
+
+    .reviewName {
+      font-size: 1.1rem;
+    }
+
+    .reviewTime {
+      font-size: 1rem;
+    }
+
+    .reviewStar {
+      font-size: 1.3rem;
+    }
+
+    .reviewBody {
+      font-size: 1rem;
+
+      display: block;
+      -webkit-line-clamp: unset;
+      -webkit-box-orient: unset;
+      overflow: visible;
+    }
+  }
+}
+
+.otherReviews {
+  margin-top: 8rem;
+}
+
+.otherReviewsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.otherReviewsTitle {
+  margin-bottom: 1.5rem;
+  color: #0ff;
+}
+
+.otherReviewsLink {
+  font-size: 0.9rem;
+  color: #0ffa;
+}
+
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  margin-top: 20px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ユーザー行
+.reviewUser {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.reviewAvatar {
+  width: 44px;
+  height: 44px;
+}
+
+.reviewMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.reviewName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e8e8e8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reviewTime {
+  font-size: 12px;
+  color: #4a6070;
+}
+
+// 星
+.reviewStars {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.reviewStar {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.reviewStarFull {
+  color: #0ff;
+}
+
+.reviewStarEmpty {
+  color: #1e2d3d;
+}
+
+.reviewBody {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #8a9bb0;
+  margin: 0;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

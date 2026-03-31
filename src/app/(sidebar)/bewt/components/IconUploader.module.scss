@@ -1,0 +1,119 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.iconUploadCont {
+  --gradient-angle: 135deg;
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border: 1.9px solid transparent;
+  border-radius: 25px;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(
+        var(--gradient-angle),
+        #6665 0%,
+        #8888 25%,
+        #fff8 50%,
+        #8888 75%,
+        #6665 100%
+      )
+      border-box;
+  text-align: center;
+  color: #888;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: --gradient-angle 0.5s ease;
+
+  &.hidden {
+    display: none;
+  }
+
+  &.dragover {
+    --gradient-angle: 315deg;
+  }
+}
+
+.iconUploadCont::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right bottom,
+    #f0f8fd03 12%,
+    #dcf4fc21 21%,
+    #caeefb33 27%,
+    #d9f3fc00 38%,
+    #edf9fe03 51%,
+    #f8fdff33 58%,
+    #caeefb03 65%,
+    #ffffff03 75%,
+    #ffffff00 84%,
+    #ffffff22 100%
+  );
+}
+
+.iconImgWrapper {
+  display: block;
+  width: 250px;
+  height: 250px;
+  margin-top: 1rem;
+}
+
+.iconPreview {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.iconPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.iconRemoveBtn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 2;
+  font-weight: bold;
+  color: white;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.9);
+  }
+}
+
+.iconFileInput {
+  display: none;
+}

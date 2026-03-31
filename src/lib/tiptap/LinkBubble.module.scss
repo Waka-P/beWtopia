@@ -1,0 +1,49 @@
+.bubbleMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 12rem;
+  padding: 0.75rem;
+  overflow: hidden;
+  /* ensure BubbleMenu is above toolbar and other UI */
+  z-index: 10010;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(135deg, var(--gradient-primary-colors)) border-box;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+}
+
+.title {
+  margin-bottom: 1rem;
+  align-self: flex-start;
+  font-weight: 700;
+  color: #fff;
+}
+
+.link {
+  margin-bottom: 1.25rem;
+  color: #00d4ff;
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.editButton {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #ddd;
+}
+
+.deleteButton {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #ff4d4f;
+}

@@ -1,0 +1,156 @@
+.popup {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  z-index: 1000;
+  border: 1.9px solid transparent;
+  border-radius: 1rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(135deg,
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+  overflow: visible;
+  transition: opacity 0.3s ease, transform 0.3s ease, max-width 0.3s ease, max-height 0.3s ease;
+}
+
+.noWidthAndHeightTransition {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  cursor: move;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+
+    background: linear-gradient(to right,
+        #00ffff00 0%,
+        #0ff 15%,
+        #0279e1 85%,
+        #025ada00 100%);
+  }
+}
+
+.headerTitle {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.headerButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.headerIcon {
+  width: 18px;
+  height: auto;
+  object-fit: contain;
+}
+
+.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.resizeHandleNW {
+  position: absolute;
+  left: -6px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+}
+
+.resizeHandleNE {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  cursor: nesw-resize;
+}
+
+.resizeHandleSW {
+  position: absolute;
+  left: -6px;
+  bottom: -6px;
+  width: 12px;
+  height: 12px;
+  cursor: nesw-resize;
+}
+
+.resizeHandleSE {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+}
+
+.resizeHandleN {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: -6px;
+  height: 12px;
+  cursor: n-resize;
+}
+
+.resizeHandleS {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -6px;
+  height: 12px;
+  cursor: s-resize;
+}
+
+.resizeHandleW {
+  position: absolute;
+  left: -6px;
+  top: 12px;
+  bottom: 12px;
+  width: 12px;
+  cursor: w-resize;
+}
+
+.resizeHandleE {
+  position: absolute;
+  right: -6px;
+  top: 12px;
+  bottom: 12px;
+  width: 12px;
+  cursor: e-resize;
+}

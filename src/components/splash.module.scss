@@ -1,0 +1,25 @@
+.container {
+  position: fixed;
+  inset: 0;
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999999;
+  opacity: 1;
+  transition:
+    opacity 1s ease,
+    transform 0.7s ease;
+}
+
+.container.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+}
+
+.logo {
+  width: 35%;
+  height: auto;
+}

@@ -1,0 +1,148 @@
+.fixedType {
+  vertical-align: top !important;
+  padding-top: 30px !important;
+}
+
+.paymentSelect {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 10px);
+  max-width: 125px;
+  min-width: 110px;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 15px;
+  text-align: center;
+  gap: 8px;
+  transition: max-height 0.4s ease, height 0.4s ease, padding 0.4s ease,
+    gap 0.4s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 15px;
+    background: linear-gradient(to right bottom,
+        #00ffff 5%,
+        #14c8ee 50%,
+        #0b8de3 85%,
+        #0251d8 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 1.5px * 2);
+    height: calc(100% - 1.5px * 2);
+    border-radius: inherit;
+    background-color: #00091a;
+    z-index: 0;
+  }
+}
+
+.paymentSelect.animate::before {
+  opacity: 1;
+}
+
+.paymentSelect.animate {
+  height: 90px;
+}
+
+.paymentSelect:not(.animate) {
+  height: 50px;
+}
+
+.paymentSelectButton {
+  width: calc(100% - 20px);
+  margin: 0 10px;
+  padding: 8px 0;
+  border: none;
+  border-radius: 20px;
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.4s ease, color 0.4s ease, transform 0.4s ease,
+    opacity 0.4s ease;
+  opacity: 1;
+  position: absolute;
+  left: 0;
+}
+
+.paymentSelectButton.selected {
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 35%,
+      #0b8de3 80%,
+      #0251d8 99%);
+  color: white;
+  transform: translateY(calc(0% + 8px));
+  z-index: 5;
+}
+
+.paymentSelectButton.unselected {
+  background: none;
+  color: #ccc;
+  transform: translateY(calc(0% + 8px));
+  z-index: 4;
+}
+
+.paymentSelect.animate .paymentSelectButton.selected[data-option="サブスク"] {
+  transform: translateY(calc(100% + 13px));
+}
+
+.paymentSelect.animate .paymentSelectButton.unselected[data-option="サブスク"] {
+  transform: translateY(calc(100% + 13px));
+}
+
+.paymentSelectButton.unselected:hover {
+  background: #fff1;
+  color: white;
+}
+
+.errorModalWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem 2rem;
+  pointer-events: none;
+}
+
+.errorIcon {
+  width: 60px;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+.errorTitle {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--error);
+}
+
+.errorMessage {
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #888;
+  text-align: center;
+}
+
+.errorOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background-color: #000d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

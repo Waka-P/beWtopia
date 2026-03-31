@@ -1,0 +1,92 @@
+.reactionBar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.reactionButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: 1.3px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(to right bottom, var(--gradient-form-colors)) border-box;
+  padding: 0.4rem 0.8rem;
+  font-size: 13px;
+  color: #0ffd;
+  transition: all 0.3s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-35deg,
+        #fff1 5%,
+        #fff0 15%,
+        #fff2 25%,
+        #fff0 35%,
+        #fff1 45%,
+        #fff0 50%,
+        #fff2 60%,
+        #fff0 85%,
+        #fff1 90%,
+        #fff0 100%);
+    pointer-events: none;
+  }
+
+  &:hover:not(:disabled) {
+    background: #00ffff33
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(1.02);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.userReacted {
+    background: #00ffff33;
+  }
+
+  &.pending {
+    opacity: 0.5;
+    cursor: wait;
+  }
+
+  // アニメーションクラスが付与されたときだけアニメーション
+  &.animating .emoji {
+    animation: bounce 0.5s ease;
+  }
+}
+
+.emoji {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.count {
+  margin-left: 0.5rem;
+  color: #00ffff;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.3);
+  }
+}

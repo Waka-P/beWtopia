@@ -1,0 +1,84 @@
+.mypageNav {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 160px;
+  margin: 4rem 0 0 1.25rem;
+  white-space: nowrap;
+  z-index: 1000;
+
+  opacity: 1;
+  overflow: hidden;
+  transition: width 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.5s ease;
+}
+
+.mypageNav.isHiding {
+  width: 0;
+  margin-left: 0;
+  opacity: 0;
+}
+
+.mypageNav.isHidden {
+  display: none;
+}
+
+.navItem {
+  position: relative;
+  font-weight: 600;
+
+  &.active {
+    color: #4adefc;
+
+    img {
+      filter: brightness(0) saturate(100%) invert(85%) sepia(14%) saturate(6136%) hue-rotate(160deg) brightness(101%) contrast(103%);
+    }
+  }
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.navItem a {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 0.15rem 0 0.15rem 0.75rem;
+}
+
+.navItem img {
+  width: 1rem;
+  height: auto;
+  margin-right: 1rem;
+  object-fit: contain;
+}
+
+.mypageNavIndicator {
+  position: absolute;
+  width: 4px;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  border-radius: 9999px;
+  transform: translateX(-5.7rem);
+  opacity: 1;
+}
+
+.mypageNav.indicatorDelay .mypageNavIndicator {
+  opacity: 0;
+  animation: fadeInMypageNavIndicator 0.3s ease forwards;
+  animation-delay: 0.1s;
+}
+
+.mypageNav.indicatorFastHide .mypageNavIndicator {
+  transition: opacity 0.1s ease;
+  opacity: 0;
+}
+
+@keyframes fadeInMypageNavIndicator {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

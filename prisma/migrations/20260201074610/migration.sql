@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `apps` ADD COLUMN `f_app_file_size_bytes` INTEGER NULL;

@@ -1,0 +1,208 @@
+// emoji-picker-reactのカスタマイズ
+.epr-main {
+  --epr-highlight-color: #00ffff !important;
+  --epr-category-icon-active-color: #00ffff !important;
+  --epr-active-skin-tone-indicator-border-color: #00ffff !important;
+  --epr-hover-bg-color: transparent !important;
+  --epr-focus-bg-color: #383d47 !important;
+  position: relative !important;
+  width: 400px !important;
+  padding-right: 0.3rem !important;
+  border-radius: 15px !important;
+  border: none !important;
+  background: transparent !important;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 15px;
+    background: linear-gradient(to right bottom,
+        #00ffff 5%,
+        #14c8ee 50%,
+        #0b8de3 85%,
+        #0251d8 100%);
+    opacity: 1;
+    z-index: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 1.5px * 2);
+    height: calc(100% - 1.5px * 2);
+    border-radius: inherit;
+    background-color: #00091a;
+    z-index: 0;
+  }
+
+  >div:last-child {
+    display: flex !important;
+    height: auto !important;
+    border-top: none !important;
+    background: #00091aaa !important;
+    margin-bottom: 1rem;
+    margin-left: 2.5rem;
+    padding: 0.5rem 0 0 0 !important;
+  }
+
+  >ul {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    >li:last-child .epr-btn {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 1.5rem !important;
+      height: 1.5rem !important;
+      border: 1.9px solid transparent !important;
+      border-radius: 8px !important;
+      background:
+        linear-gradient(#00091a, #00091a) padding-box,
+        linear-gradient(135deg,
+          #6665 0%,
+          #8888 25%,
+          #fff8 50%,
+          #8888 75%,
+          #6665 100%) border-box !important;
+      font-size: 1.2rem !important;
+      color: #888 !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+
+      &:hover {
+        transform: scale(1.15) !important;
+      }
+
+      &:active {
+        transform: scale(1.05) !important;
+      }
+    }
+  }
+}
+
+.epr-main>ul,
+.epr-body,
+.epr-search-container,
+.epr-category-nav,
+.epr-emoji-category-label,
+.epr-skin-tones,
+.epr-emoji-list {
+  position: relative;
+  z-index: 1;
+}
+
+.epr-category-nav {
+  color: #00ffff !important;
+
+  .epr-btn {
+    &::before {
+      border: none !important;
+    }
+
+    &.epr-active {
+      filter: brightness(0) saturate(100%) invert(84%) sepia(50%) saturate(883%) hue-rotate(115deg) brightness(110%) contrast(104%);
+    }
+
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(84%) sepia(50%) saturate(883%) hue-rotate(115deg) brightness(110%) contrast(104%);
+    }
+  }
+}
+
+.epr-btn {
+  box-shadow: none !important;
+}
+
+.epr-header {
+  >div {
+    padding: 1.25rem 1rem 0 1rem !important;
+  }
+}
+
+.epr-body {
+  padding: 0 1.5rem !important;
+
+  &::-webkit-scrollbar {
+    width: 10px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+    border-radius: 10px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #00ffff, #0b8de3) !important;
+    border-radius: 10px !important;
+    min-height: 50px;
+
+    &:hover {
+      background: linear-gradient(to bottom, #00ffffcc, #0b8de3cc) !important;
+    }
+  }
+}
+
+.epr-emoji-list {
+  padding: 0 0.5rem !important;
+}
+
+.epr-search-container {
+  input {
+    --gradient-angle: 135deg;
+    width: 100% !important;
+    padding: 0.75rem 1rem 0.75rem 2rem !important;
+    font-size: 1rem !important;
+    text-align: left !important;
+    border: 1.9px solid transparent !important;
+    border-radius: 0.25rem !important;
+    background:
+      linear-gradient(#00091a, #00091a) padding-box,
+      linear-gradient(var(--gradient-angle),
+        #0ff,
+        #0ff4,
+        #0ff9,
+        #0ff4,
+        #0ff9,
+        #0ff4,
+        #0ff9) border-box !important;
+    transition: --gradient-angle 0.5s ease !important;
+    outline: none !important;
+    color: white !important;
+
+    &::placeholder {
+      color: #888;
+    }
+  }
+
+  .epr-btn {
+    &.epr-active {
+      filter: brightness(0) saturate(100%) invert(84%) sepia(50%) saturate(883%) hue-rotate(115deg) brightness(110%) contrast(104%);
+    }
+
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(84%) sepia(50%) saturate(883%) hue-rotate(115deg) brightness(110%) contrast(104%);
+    }
+  }
+}
+
+.epr-skin-tones {
+  background-color: transparent !important;
+}
+
+.epr-emoji-category-label {
+  color: #00ffff !important;
+  background: #00091aaa !important;
+  backdrop-filter: none !important;
+  position: sticky !important;
+}
+
+.epr-emoji-variation-picker {
+  background: #00091a !important;
+  border: 1px solid #00ffff4d !important;
+}

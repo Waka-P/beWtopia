@@ -1,0 +1,123 @@
+.panel {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(135deg, var(--gradient-primary-colors)) border-box;
+  border-radius: 16px;
+  padding: 16px;
+  z-index: 9999;
+  color: #fff;
+  animation: fadeIn 0.25s ease;
+}
+
+.header {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.appName {
+  width: 10rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ステータス表示 */
+
+.statusDownloading {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.statusDone {
+  font-size: 12px;
+  color: #22c55e;
+}
+
+.statusFailed {
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* 全部DLボタン */
+
+.allBtn {
+  background: linear-gradient(135deg, var(--gradient-primary-colors));
+  border: none;
+  border-radius: 9999px;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(1.01);
+  }
+}
+
+.downloadBtn {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.downloadBtnIcon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* スク役割バー（WebKit） */
+
+.list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+/* フェードイン */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

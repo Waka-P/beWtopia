@@ -1,0 +1,424 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 40px 80px;
+}
+
+.topRow {
+  margin-bottom: 2rem;
+}
+
+.trail {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #00ffffee;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.trailArrow {
+  font-size: 1.05rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.statusSection {
+  margin-bottom: 5rem;
+
+  .sectionTitle {
+    text-align: center;
+  }
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--text-primary);
+}
+
+.desc {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.statusToggleRow {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  background: transparent;
+  transition: opacity 0.2s ease;
+}
+
+.statusBadge:disabled {
+  cursor: default;
+}
+
+.statusBadge.recruiting {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.statusBadge.developing {
+  background: rgba(245, 166, 35, 0.15);
+  color: #f5a623;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+}
+
+.statusBadge.completed {
+  background: rgba(148, 163, 184, 0.06);
+  color: var(--text-secondary);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.statusBadgeInactive {
+  opacity: 0.2;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.emptyText {
+  color: var(--text-muted);
+}
+
+.memberList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.membersEditorLayout {
+  display: grid;
+  grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.memberListPanel {
+  border: 1.9px solid transparent;
+  background: linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(155deg, var(--gradient-primary-colors)) border-box;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.memberListHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.memberSearchBar {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 1rem;
+}
+
+.memberCountBadge {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.memberListPanel .memberList {
+  max-height: 62vh;
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.memberSelectableItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.18);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.memberSelectableItem:hover {
+  border-color: rgba(0, 229, 255, 0.25);
+}
+
+.memberSelectableItemActive {
+  border-color: rgba(0, 229, 255, 0.4);
+  background: rgba(0, 229, 255, 0.06);
+}
+
+.memberItemRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.memberDirtyBadge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #f5a623;
+  border: 1px solid rgba(245, 166, 35, 0.35);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.joinStatus {
+  position: relative;
+  padding: 0.15rem 0.8rem;
+  border: 1.3px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(to right bottom, var(--gradient-form-colors)) border-box;
+  font-size: 0.8rem;
+  color: #0ffd;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-35deg,
+        #fff1 5%,
+        #fff0 15%,
+        #fff2 25%,
+        #fff0 35%,
+        #fff1 45%,
+        #fff0 50%,
+        #fff2 60%,
+        #fff0 85%,
+        #fff1 90%,
+        #fff0 100%);
+    pointer-events: none;
+  }
+}
+
+.memberEditPanel {
+  position: sticky;
+  top: 20px;
+}
+
+.editPanelTitle {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.editFieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 2rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.fieldLabel {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.memberItem {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  border: 1.9px solid transparent;
+  background: linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(155deg, var(--gradient-primary-colors)) border-box;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.memberMain {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.memberInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.memberName {
+  color: var(--text-primary);
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.memberMeta {
+  color: var(--text-muted);
+  font-size: 12px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.permissionControls {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.select {
+  min-width: 140px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--cyan-border);
+  background: var(--surface, #0d1526);
+  color: var(--text-primary);
+}
+
+.saveBtn {
+  margin-left: auto;
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  color: #00e5ff;
+  background: transparent;
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.saveBtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+@media (max-width: 1024px) {
+  .membersEditorLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .memberListPanel .memberList {
+    max-height: 40vh;
+  }
+
+  .memberEditPanel {
+    position: static;
+  }
+}
+
+.settingLinkGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.settingLinkCard {
+  position: relative;
+  --gradient-angle: 135deg;
+  max-width: 450px;
+  padding: 1.5rem 1.8rem;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #6665 0%,
+      #8888 25%,
+      #fff8 50%,
+      #8888 75%,
+      #6665 100%) border-box;
+  box-shadow: 0 25px 35px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-25deg,
+        #f0f8fd03 12%,
+        #dcf4fc21 21%,
+        #caeefb33 27%,
+        #d9f3fc00 38%,
+        #edf9fe03 51%,
+        #f8fdff33 58%,
+        #caeefb03 65%,
+        #ffffff03 75%,
+        #ffffff00 84%,
+        #ffffff22 100%);
+  }
+}
+
+.deleteSection {
+  margin-top: 3.5rem;
+  padding-bottom: 1rem;
+  display: flex;
+}
+
+.deleteProjectText {
+  border: none;
+  background: transparent;
+  color: var(--error);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.deleteProjectText:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

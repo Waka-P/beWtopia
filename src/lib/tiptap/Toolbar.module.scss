@@ -1,0 +1,49 @@
+.toolbar {
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+  /* allow popup elements (bubble menu, carets) to render above toolbar */
+  overflow: visible;
+  position: relative;
+  z-index: 0;
+  color: #ccc;
+  transition: max-height 0.1s ease, opacity 0.1s ease, padding 0.1s ease;
+}
+
+.toolbarClosed {
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+.toolbarOpen {
+  max-height: 240px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toolbarBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.divider {
+  width: 1px;
+  background: #333;
+  margin: 0 4px;
+}

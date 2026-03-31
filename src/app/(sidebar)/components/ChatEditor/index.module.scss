@@ -1,0 +1,223 @@
+.chatEditorWrapper {
+  position: relative;
+  --gradient-angle: 135deg;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.4rem 0.75rem;
+
+  border: 1.9px solid transparent;
+  border-radius: 9999px; // デフォルトは完全な丸
+
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+
+  max-height: 300px;
+  transition: max-height 0.8s ease;
+  overflow: hidden;
+  z-index: 999;
+}
+
+:global(.ProseMirror)::-webkit-scrollbar {
+  display: none;
+}
+
+:global(.tiptap) :global(p.is-editor-empty:first-child)::before {
+  color: #888;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.chatEditorWrapper.menuOpen {
+  overflow: visible;
+}
+
+.draggingOver {
+  background: rgba(0, 212, 255, 0.05);
+  outline: 2px dashed #00d4ff;
+  outline-offset: -2px;
+}
+
+.chatEditorWrapper.expanded {
+  max-height: 600px;
+  border-radius: 1rem;
+  align-items: flex-end;
+}
+
+.uploadError {
+  padding: 8px 12px;
+  background: rgba(255, 68, 68, 0.15);
+  color: #ff6b6b;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-bottom: 8px;
+  border-left: 3px solid #ff4444;
+}
+
+.editorContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputButtons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 5px;
+}
+
+.actionBtn {
+  background: transparent;
+  border: none;
+  color: #00ffff;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 900;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #00ffff30;
+  }
+
+  &.show {
+    transform: rotate(45deg);
+  }
+}
+
+.sendBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%);
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.25s ease;
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &:not(.disabled):hover {
+    transform: scale(1.03);
+  }
+
+  &:not(.disabled):active {
+    transform: scale(1.01);
+  }
+
+  .sendIcon {
+    width: 20px;
+    height: 20px;
+    fill: #0a1929;
+  }
+}
+
+.menuWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.actionMenu {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(to right bottom, var(--gradient-primary-colors)) border-box;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  padding: 5px 0;
+  min-width: 200px;
+  z-index: 1000;
+}
+
+.menuItem {
+  padding: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #fff;
+  transition: background 0.2s;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+
+  &:hover {}
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.menuIcon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.menuImgIcon {
+  width: 1rem;
+  height: 1rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.externalError {
+  padding: 8px 12px;
+  background: #ff444420;
+  color: #ff6b6b;
+  border-radius: 4px;
+  font-size: 13px;
+  margin-bottom: 8px;
+  white-space: pre-wrap;
+}
+
+/* Emoji mark: keep the underlying Unicode char (accessibility and text length),
+   but render Apple emoji image visually via inline background-image. */
+.emoji {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  line-height: 1;
+  font-size: 0;
+  /* hide inner text while keeping it in DOM for copy/paste */
+}

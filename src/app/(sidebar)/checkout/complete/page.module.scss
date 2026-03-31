@@ -1,0 +1,116 @@
+.mypageContent {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0;
+}
+
+.completeMain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 70px);
+}
+
+.completeCard {
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 2.25rem 2.75rem;
+  text-align: center;
+}
+
+.completeIconWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+}
+
+.checkIcon {
+  width: 80px;
+  height: auto;
+}
+
+.completeTitle {
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.skippedSection {
+  margin: 3rem 0 0 0;
+  padding: 1.7rem 2rem;
+  border-radius: 0.9rem;
+  border: 1px solid #ff3030;
+  text-align: left;
+}
+
+.skippedTitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ff3030;
+}
+
+.skippedList {
+  margin: 0;
+  padding-left: 1.2rem;
+  list-style: disc;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.skippedItem+.skippedItem {
+  margin-top: 0.25rem;
+}
+
+.completeActions {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-top: 5rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.6rem;
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.primaryButton {
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.55);
+}
+
+.secondaryButton {
+  padding: 0.8rem 1.2rem;
+  text-align: center;
+  border-radius: 9999px;
+  border: 1.5px solid transparent;
+  background: linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(155deg, var(--gradient-primary-colors)) border-box;
+  color: #e5e7eb;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.primaryButton:hover,
+.secondaryButton:hover {
+  transform: scale(1.02);
+  opacity: 0.95;
+}
+
+.primaryButton:active,
+.secondaryButton:active {
+  transform: scale(1);
+  opacity: 0.9;
+}

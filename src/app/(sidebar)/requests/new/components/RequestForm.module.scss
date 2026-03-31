@@ -1,0 +1,180 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 4rem;
+  color: #00ffffee;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  span {
+    font-size: 1rem;
+  }
+}
+
+.header h2 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.errorBanner {
+  padding: 1rem;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1.5px solid rgba(255, 0, 0, 0.5);
+  border-radius: 8px;
+  color: #ff6b6b;
+  text-align: center;
+}
+
+.formWrapper {
+  display: flex;
+  gap: 3rem;
+}
+
+.leftSide,
+.rightSide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  color: #0ff;
+  font-size: 1rem;
+}
+
+.input {
+  --gradient-angle: 135deg;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1.9px solid transparent;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  outline: none;
+  color: white;
+
+  &::placeholder {
+    color: #888;
+  }
+}
+
+.textarea {
+  --gradient-angle: 135deg;
+  resize: none;
+  width: 100%;
+  height: 150px;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1.9px solid transparent;
+  outline: none;
+  color: white;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  border-radius: 0.25rem;
+  outline: none;
+
+  &::placeholder {
+    color: #888;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+.errAndCounter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+
+.errorMessage {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+}
+
+.counter {
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.counterError {
+  color: #ff6b6b;
+}
+
+.submitButton {
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  &:hover:not(:disabled) {
+    opacity: 0.8;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

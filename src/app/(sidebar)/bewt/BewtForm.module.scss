@@ -1,0 +1,476 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  padding: 4rem 0 2rem 0;
+}
+
+/* Content Slider */
+.contentSlider {
+  overflow: hidden;
+}
+
+.contentWrapper {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.contentPanel {
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
+.contentPanel.basicInfo,
+.contentPanel.salesSettings {
+  display: flex;
+  justify-content: center;
+  gap: 6rem;
+  width: calc(100% - 4rem);
+  padding: 0 6rem;
+}
+
+.contentPanel.iconUpload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.basicInfo .leftSide {
+  flex: 5.5;
+  max-width: 530px;
+}
+
+.salesSettings .leftSide,
+.salesSettings .rightSide {
+  flex: 5;
+  max-width: 500px;
+}
+
+.basicInfo .rightSide {
+  flex: 4.5;
+  max-width: 650px;
+}
+
+/* Form Groups */
+.formGroup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 2rem;
+
+  &:has(#template-btn) {
+    margin-top: 4rem;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.iconUploadGroup {
+    max-width: 500px;
+    align-items: center;
+  }
+}
+
+.formLabel {
+  display: inline-block;
+  align-self: flex-start;
+  color: #0ff;
+  margin-bottom: 0.4rem;
+}
+
+.formInput {
+  --gradient-angle: 135deg;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1.9px solid transparent;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  outline: none;
+  color: white;
+
+  &::placeholder {
+    color: #888;
+  }
+}
+
+.formTextarea {
+  resize: none;
+  width: 100%;
+  height: 150px;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  outline: none;
+  color: white;
+  background: transparent;
+  border: none;
+
+  &::placeholder {
+    color: #888;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.textareaWrapper {
+  --gradient-angle: 135deg;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 3.25rem;
+  border: 1.9px solid transparent;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  outline: none;
+}
+
+.textareaBtns {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.resetBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  &:not(:disabled):hover {
+    opacity: 0.7;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+}
+
+.templateBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+}
+
+/* Sales Settings */
+.salesFormatCont {
+  padding: 1.2rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%) border-box;
+}
+
+.oneTimeCont,
+.monthlyCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.oneTimeCont {
+  margin-bottom: 1.5rem;
+}
+
+.monthlyCont .inputTextWrapper span {
+  width: 50px;
+}
+
+.priceInputCont {
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    margin 0.4s ease,
+    max-height 0.4s ease,
+    opacity 0.3s ease;
+  width: 100%;
+
+  &.open {
+    margin: 0.8rem 0 1rem 0;
+    opacity: 1;
+    max-height: 200px;
+  }
+}
+
+.inputTextWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  span {
+    white-space: nowrap;
+    color: white;
+  }
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.paymentMethodCont {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  padding: 1.2rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%) border-box;
+}
+
+.methodNameWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.methodIcon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  .checkmark {
+    position: relative;
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border-radius: 0.25rem;
+    background: linear-gradient(to right bottom,
+        #00ffff 5%,
+        #14c8ee 50%,
+        #0b8de3 85%,
+        #0251d8 100%);
+    transition: background 0.2s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(100% - 0.2rem);
+      height: calc(100% - 0.2rem);
+      border-radius: 0.15rem;
+      background-color: #00091a;
+      opacity: 1;
+      transition: opacity 0.2s ease;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1rem;
+      height: 1rem;
+      background-image: url(/images/check.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+  }
+
+  input[type="checkbox"]:checked+.checkmark::before {
+    opacity: 0;
+  }
+
+  input[type="checkbox"]:checked+.checkmark::after {
+    opacity: 1;
+  }
+}
+
+.trialCont {
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%) border-box;
+}
+
+.trialFormCont {
+  margin-top: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    margin 0.4s ease,
+    max-height 0.4s ease,
+    opacity 0.3s ease;
+
+  &.open {
+    margin-top: 1.5rem;
+    opacity: 1;
+    max-height: 600px;
+  }
+}
+
+.bewtBtn {
+  margin-top: 5rem;
+  padding: 12px 23px;
+  text-align: center;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%);
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.25s ease;
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &:not(.disabled):hover {
+    transform: scale(1.03);
+  }
+
+  &:not(.disabled):active {
+    transform: scale(1.01);
+  }
+}
+
+/* Navigation */
+.navigation {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.prevBtn,
+.nextBtn {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.prevBtn {
+  background: none;
+
+  &.hidden {
+    visibility: hidden;
+  }
+}
+
+.nextBtn {
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%);
+  color: white;
+
+  &:not(:disabled):hover {
+    opacity: 0.9;
+  }
+
+  &.hidden {
+    visibility: hidden;
+  }
+}
+
+/* Error Messages */
+.errMessage {
+  color: #ff4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}

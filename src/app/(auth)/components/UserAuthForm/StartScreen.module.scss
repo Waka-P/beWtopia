@@ -1,0 +1,116 @@
+.startScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.3rem;
+  margin-top: 15rem;
+}
+
+.iconWrapper {
+  position: relative;
+  width: 230px;
+  height: 180px;
+}
+
+.centerIcon,
+.googlePos,
+.facebookPos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.iconWrapperAnimated .centerIcon {
+  animation: centerToTop 0.7s ease-out forwards;
+}
+
+.iconWrapperAnimated .googlePos {
+  animation: centerToBottomLeft 0.7s ease-out forwards;
+}
+
+.iconWrapperAnimated .facebookPos {
+  animation: centerToBottomRight 0.7s ease-out forwards;
+}
+
+@keyframes centerToTop {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+  }
+
+  100% {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes centerToBottomLeft {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+  }
+
+  100% {
+    top: 100%;
+    left: 22%;
+    transform: translate(-50%, -100%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes centerToBottomRight {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+  }
+
+  100% {
+    top: 100%;
+    left: 78%;
+    transform: translate(-50%, -100%) scale(1);
+    opacity: 1;
+  }
+}
+
+.disableHoverAll {
+  pointer-events: none;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.25s ease;
+}
+
+.iconButton:hover {
+  transform: scale(1.05);
+  transition: transform 0.25s ease;
+}
+
+.iconButton:active {
+  transform: scale(0.95);
+}
+
+.facebookButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+  user-select: none;
+}
+
+.facebookButton:active {
+  transform: scale(1);
+}

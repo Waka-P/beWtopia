@@ -1,0 +1,121 @@
+.toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.toolbarBtn {
+  width: 1.75rem;
+  height: 1.75rem;
+  font-size: 1.5rem;
+}
+
+.editorContent {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.25rem 0 0 0;
+
+  :global(.ProseMirror) {
+    outline: none;
+    color: #fff;
+    padding: 0 5px;
+    line-height: 1.4;
+
+    strong {
+      font-weight: 600;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    s {
+      text-decoration: line-through;
+    }
+
+    u {
+      text-decoration: underline;
+    }
+
+    a {
+      color: #00d4ff;
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:hover {
+        color: #00e5ff;
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+
+    ul,
+    ol {
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+
+    ul {
+      list-style-type: disc;
+    }
+
+    ol {
+      list-style-type: decimal;
+    }
+
+    blockquote {
+      border-left: 2px solid #555;
+      margin: 0.5rem 0;
+      padding-left: 1rem;
+      color: #aaa;
+    }
+
+    pre {
+      border-radius: 0.5rem;
+      color: #c9d1d9;
+      font-family: 'JetBrainsMono', 'Courier New', Courier, monospace;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0;
+
+      code {
+        color: inherit;
+        font-size: 0.8rem;
+        padding: 0;
+      }
+    }
+
+    code {
+      border: 1.5px solid transparent;
+      background: linear-gradient(#00091A, #00091A) padding-box,
+        linear-gradient(135deg, #6665 0%, #8888 25%, #fff8 50%, #8888 75%, #6665 100%) border-box;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.85rem;
+      font-family: 'JetBrainsMono', 'Courier New', Courier, monospace;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+    border-radius: 10px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #00ffff, #0b8de3) !important;
+    border-radius: 10px !important;
+    min-height: 50px;
+
+    &:hover {
+      background: linear-gradient(to bottom, #00ffffcc, #0b8de3cc) !important;
+    }
+  }
+}

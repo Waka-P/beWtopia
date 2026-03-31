@@ -1,0 +1,77 @@
+.content {
+  padding: 1rem 0;
+
+  p {
+    margin: 0 0 0.75rem;
+    font-size: 0.95rem;
+    color: #e0e0e0;
+    line-height: 1.5;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .warning {
+    font-size: 0.85rem;
+    color: #ff6b6b;
+    font-weight: 500;
+  }
+}
+
+.footerActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.cancelButton {
+  padding: 0.625rem 1.25rem;
+  border: 1.9px solid transparent;
+  border-radius: 8px;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(135deg, #6665 0%, #8888 25%, #fff8 50%, #8888 75%, #6665 100%) border-box;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background:
+      linear-gradient(#001129, #001129) padding-box,
+      linear-gradient(135deg, #6665 0%, #8888 25%, #fff8 50%, #8888 75%, #6665 100%) border-box;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.deleteButton {
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff5555, #dd0000);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

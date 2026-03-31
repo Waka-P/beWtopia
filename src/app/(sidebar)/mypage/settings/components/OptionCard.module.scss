@@ -1,0 +1,90 @@
+.optionCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  position: relative;
+  --gradient-angle: 135deg;
+  width: 300px;
+  min-width: 300px !important;
+  padding: 0.8rem 4rem 0.8rem 1.3rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #6665 0%,
+      #8888 25%,
+      #fff8 50%,
+      #8888 75%,
+      #6665 100%) border-box;
+  box-shadow: 0 25px 35px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-25deg,
+        #f0f8fd03 12%,
+        #dcf4fc21 21%,
+        #caeefb33 27%,
+        #d9f3fc00 38%,
+        #edf9fe03 51%,
+        #f8fdff33 58%,
+        #caeefb03 65%,
+        #ffffff03 75%,
+        #ffffff00 84%,
+        #ffffff22 100%);
+  }
+}
+
+.optionCardDisabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.optionCardSelected {
+  position: relative;
+  width: 300px;
+  min-width: fit-content;
+  padding: calc(0.8rem - 1px) calc(4rem - 1px) calc(0.8rem - 1px) calc(1.3rem - 1px);
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      var(--gradient-primary-colors)) border-box;
+}
+
+.optionHeader {
+  display: flex;
+}
+
+.optionLabel {
+  min-width: fit-content;
+  white-space: nowrap;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.optionMain {
+  min-width: fit-content;
+  white-space: nowrap;
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--accent);
+  margin: 0;
+}
+
+.rightArrow {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: #fffd;
+}

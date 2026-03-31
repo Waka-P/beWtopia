@@ -1,0 +1,212 @@
+.attachmentsArea {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 10px;
+  align-items: center;
+}
+
+// 非画像ファイル
+.nonImageFile {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 62.5px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #fff;
+  cursor: default;
+  transition: background 0.2s;
+  border: 1px solid transparent;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(to right bottom, var(--gradient-form-colors)) border-box;
+  font-size: 0.8rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-35deg,
+        #fff1 5%,
+        #fff0 15%,
+        #fff2 25%,
+        #fff0 35%,
+        #fff1 45%,
+        #fff0 50%,
+        #fff2 60%,
+        #fff0 85%,
+        #fff1 90%,
+        #fff0 100%);
+    pointer-events: none;
+  }
+}
+
+.fileIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(to right bottom,
+      #f0f8fd,
+      #dcf4fc,
+      #caeefb,
+      #d9f3fc,
+      #edf9fe,
+      #f8fdff,
+      #caeefb,
+      #ffffff);
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+  color: #00091a;
+  flex-shrink: 0;
+}
+
+.fileInfo {
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100% - 40px);
+}
+
+.fileName {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileType {
+  font-size: 11px;
+  color: #7a8a99;
+}
+
+// 画像プレビュー
+.imagePreviewList {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.imagePreview {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 62.5px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: grab;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  user-select: none;
+  flex-shrink: 0;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.imageInner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.imageNumber {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  font-weight: bold;
+  font-size: 0.75rem;
+  z-index: 10;
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(to right bottom,
+      var(--gradient-primary-colors));
+}
+
+.imageNumber::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: linear-gradient(to right bottom,
+      #f0f8fd03 12%,
+      #dcf4fc21 21%,
+      #caeefb33 27%,
+      #d9f3fc00 38%,
+      #edf9fe03 51%,
+      #f8fdff33 58%,
+      #caeefb03 65%,
+      #ffffff03 75%,
+      #ffffff00 84%,
+      #ffffff22 100%);
+  opacity: 1;
+}
+
+.imageNumber::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 0.2rem);
+  height: calc(100% - 0.2rem);
+  border-radius: 50%;
+  background-color: #00091a;
+}
+
+.imageNumber .inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  color: #fff;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.9);
+  }
+}
+
+.dragOverlay {
+  position: relative;
+  aspect-ratio: 8 / 5;
+  width: 100px;
+  height: auto;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: grabbing;
+  user-select: none;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}

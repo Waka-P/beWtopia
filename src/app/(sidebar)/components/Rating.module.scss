@@ -1,0 +1,27 @@
+.rating {
+  width: fit-content;
+  position: relative;
+  display: inline-block;
+  font-size: 0.9rem;
+  font-family: Arial, sans-serif;
+  line-height: 1;
+  flex-shrink: 0;
+  letter-spacing: 0.3em;
+
+  .starBg {
+    pointer-events: none;
+    color: transparent;
+    -webkit-text-stroke: 0.04em #10ffff;
+  }
+
+  .starFg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #10ffff;
+    width: 0;
+    pointer-events: none;
+  }
+}

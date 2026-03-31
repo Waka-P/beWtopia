@@ -1,0 +1,516 @@
+.page {
+  position: relative;
+  max-width: 900px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 1rem 1.5rem 1rem;
+  overflow: hidden;
+
+  -webkit-mask-image: linear-gradient(to top,
+      transparent 1px,
+      #0008 13px,
+      black 25px);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to top,
+      transparent 1px,
+      #0008 13px,
+      black 25px);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+.tabArea {
+  margin-top: 0.5rem;
+}
+
+.tabTop {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 0.8rem;
+}
+
+.tabbed {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  padding: 0.5rem;
+  border-radius: 9999px;
+}
+
+.tabbed::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 1.5px * 2);
+  height: calc(100% - 1.5px * 2);
+  background-color: #00091a;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+.tabbed::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.tabbedIndicator {
+  position: absolute;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  border-radius: 25px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+  transition: all 300ms ease;
+}
+
+.tabBtn {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0.6rem 1.5rem;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  color: #fff;
+  z-index: 2;
+  font-size: 0.9rem;
+}
+
+.activeTab {
+  color: #fff;
+}
+
+.historyPanel {
+  height: 100%;
+  margin-top: 0.25rem;
+}
+
+.settingsPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  max-height: 100%;
+  margin-top: 0.75rem;
+  padding-bottom: 1rem;
+}
+
+.notificationGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 560px;
+  width: 100%;
+  max-height: 100%;
+  padding: 1rem 0 3rem 0;
+  overflow-y: scroll;
+
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 1px,
+      #0008 13px,
+      black 25px,
+      black calc(100% - 25px),
+      #0008 calc(100% - 13px),
+      transparent calc(100% - 1px));
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to bottom,
+      transparent 1px,
+      #0008 13px,
+      black 25px,
+      black calc(100% - 25px),
+      #0008 calc(100% - 13px),
+      transparent calc(100% - 1px));
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+.notificationGroupHeader {
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 5rem;
+  min-width: fit-content;
+}
+
+.notificationGroupTitle {
+  margin: 0;
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.notificationGroupAll {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  gap: 0.8rem;
+}
+
+.notificationSettingsLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: 19.5rem;
+  margin-bottom: 0.3rem;
+  border-radius: 9999px;
+  transition: all .25s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.notificationSettingsIcon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.notificationGroupAllLabel {
+  font-weight: 500;
+  font-size: 0.83rem;
+}
+
+.notificationSettingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.2rem 1rem;
+
+  &:hover {
+    background: #ffffff05;
+  }
+}
+
+.notificationSettingLabel {
+  font-weight: 500;
+}
+
+.notificationSettingDesc {
+  margin-top: 0.2rem;
+  color: #6b7a9a;
+  font-size: 0.85rem;
+}
+
+/* ── 通知リスト ── */
+.notificationList {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-bottom: 4rem;
+  overflow-y: scroll;
+
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 1px,
+      #0008 13px,
+      black 25px,
+      black calc(100% - 25px),
+      #0008 calc(100% - 13px),
+      transparent calc(100% - 1px));
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to bottom,
+      transparent 1px,
+      #0008 13px,
+      black 25px,
+      black calc(100% - 25px),
+      #0008 calc(100% - 13px),
+      transparent calc(100% - 1px));
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6b7a9a;
+  font-size: 14px;
+}
+
+/* ── 通知アイテム ── */
+.notificationItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .05);
+  position: relative;
+  transition: background .15s;
+  cursor: pointer;
+}
+
+.notificationItem:first-child {
+  border-top: 1px solid rgba(255, 255, 255, .05);
+}
+
+.notificationItem:hover {
+  background: rgba(255, 255, 255, .02);
+}
+
+.notificationItemStatic {
+  cursor: default;
+}
+
+.notificationItemStatic:hover {
+  background: transparent;
+}
+
+/* 未読インジケーター */
+.notificationItem.unread::before {
+  content: '';
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00e5ff;
+  box-shadow: 0 0 6px #00e5ff;
+}
+
+/* ── アバター ── */
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar {
+  display: block;
+  width: 60px;
+  height: 60px;
+  background-color: #00091a;
+}
+
+/* アバター右下のアイコンバッジ */
+.avatarBadge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 30px;
+  height: 30px;
+  padding: 4px;
+  border-radius: 50%;
+  border: 2px solid #080e1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  vertical-align: middle;
+  background-color: #0ff;
+
+  & .categoryIconImg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+/* ── 本文 ── */
+.notificationBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.notificationTitle {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 4px;
+  color: #e2e8f4;
+}
+
+.notificationTitle strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+.notificationTime {
+  font-size: 12px;
+  color: #6b7a9a;
+  margin-bottom: 10px;
+}
+
+/* プレビューテキスト（スカウト・チャットなど） */
+.notificationPreview {
+  font-size: 13px;
+  color: #ddd;
+  line-height: 1.7;
+  /* 2行で省略 */
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.joinMeta {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.joinMetaBlock {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 0.3rem;
+}
+
+.joinTotal {
+  color: #768686;
+  font-size: 12px;
+}
+
+.joinRole {
+  display: inline-block;
+  margin: 0.3rem 0 0.75rem 0;
+
+  span {
+    color: #637171;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+}
+
+.joinStatus {
+  margin-left: 8px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.memberCountBadge {
+  display: inline-block;
+  font-size: 13px;
+}
+
+.memberCountBadge.nearFull {
+  color: var(--error);
+  font-weight: 700;
+}
+
+.nearFull {
+  color: var(--error);
+  font-weight: 700;
+}
+
+/* アクションボタン群 */
+.notificationActions {
+  display: flex;
+  gap: 20px;
+}
+
+.actionLink {
+  font-size: 13px;
+  color: #00e5ff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity .2s;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.actionLink:hover {
+  opacity: .7;
+}
+
+/* ── 右側エリア（時刻 or ボタン） ── */
+.notificationRight {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.timeLabel {
+  font-size: 12px;
+  color: #6b7a9a;
+  white-space: nowrap;
+}
+
+/* フォローボタン */
+.followBtn {
+  background: linear-gradient(135deg, var(--gradient-primary-colors));
+  border: none;
+  border-radius: 20px;
+  padding: 8px 22px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: .03em;
+  white-space: nowrap;
+  transition: opacity .2s, transform .15s;
+}
+
+.followBtn:hover {
+  opacity: .85;
+  transform: translateY(-1px);
+}
+
+.followBtn.following {
+  background: transparent;
+  border: 1.5px solid transparent;
+  background: linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(155deg, var(--gradient-primary-colors)) border-box;
+  color: #fff;
+  font-weight: 500;
+}
+
+.sideActionBtn {
+  border: 1.5px solid transparent;
+  background: linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(155deg, var(--gradient-primary-colors)) border-box;
+  color: #fff;
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sideActionBtn:hover {
+  opacity: .8;
+}

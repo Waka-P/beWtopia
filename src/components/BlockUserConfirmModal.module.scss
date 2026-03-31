@@ -1,0 +1,84 @@
+.description {
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.userRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.userName {
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: anywhere;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2.75rem;
+}
+
+.button {
+  min-width: 96px;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.cancelButton {
+  background: transparent;
+}
+
+.cancelButton:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.blockButton {
+  background: #ff2824;
+  color: #fff;
+}
+
+.blockButton:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.unblockButton {
+  background: transparent;
+  border: 1.5px solid #f00;
+  color: #f00;
+}
+
+.unblockButton:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.approveButton {
+  background: linear-gradient(135deg, var(--gradient-primary-colors));
+  color: #fff;
+}
+
+.approveButton:hover:not(:disabled) {
+  opacity: 0.9;
+}

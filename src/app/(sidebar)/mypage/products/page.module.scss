@@ -1,0 +1,924 @@
+:global(main) {
+  margin-top: calc(-70px - 1rem);
+  padding: calc(70px + 1rem) 0 0 0;
+}
+
+.mypageContent {
+  width: 100%;
+  height: 100%;
+  margin-right: 3rem;
+  padding-top: 2rem;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.mypageHeader {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  background: linear-gradient(to bottom,
+      #00091A 0%,
+      #00091Aee 100%);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
+}
+
+.controlsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.toggleTabbed {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  padding: 0.5rem;
+  border-radius: 9999px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 1.5px * 2);
+    height: calc(100% - 1.5px * 2);
+    background-color: #00091a;
+    border-radius: 9999px;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+    border-radius: 9999px;
+    z-index: 0;
+  }
+}
+
+.tabbedIndicator {
+  position: absolute;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  border-radius: 25px;
+  pointer-events: none;
+  opacity: 1;
+  z-index: 1;
+  transition: all 300ms ease;
+  will-change: transform, opacity;
+}
+
+.tabBtn {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0.6rem 1.5rem;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  color: #fff;
+  z-index: 2;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1;
+
+  &:hover {
+    color: #e0e0e0;
+  }
+
+  &[data-active] {
+    color: #fff;
+  }
+}
+
+.listController {
+  display: flex;
+  align-items: center;
+}
+
+.listController button {
+  margin: 0 7px;
+  transition: transform 0.3s ease;
+}
+
+.listController button:hover {
+  transform: scale(1.07);
+  transition: transform 0.3s ease;
+}
+
+.listController button:active {
+  transform: scale(1.04);
+  transition: transform 0.1s ease;
+}
+
+.filter img {
+  width: 30px;
+  height: auto;
+}
+
+.sortMenuCont {
+  position: relative;
+}
+
+.sort {
+  width: auto;
+  height: auto;
+}
+
+.sort img {
+  width: 30px;
+  height: auto;
+}
+
+.sortMenu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8rem;
+  padding: 0.6rem 0.7rem;
+  visibility: hidden;
+  opacity: 0;
+  box-shadow: 1px 0 5px #00091abb;
+  border-radius: 1rem;
+  transition: opacity 0.3s ease, visibility 0.3s, transform 0.2s ease;
+  will-change: opacity, transform;
+  z-index: 100;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 1.5px * 2);
+    height: calc(100% - 1.5px * 2);
+    background-color: #00091a;
+    border-radius: 1rem;
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+    border-radius: 1rem;
+    z-index: -2;
+  }
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.sortMenuItem {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto !important;
+  padding: 0.5rem 0;
+  text-align: center;
+  color: #fff;
+  z-index: 2;
+  transform: none !important;
+}
+
+.sortMenuItem span {
+  width: 64px;
+  margin: 0;
+}
+
+.sortMenuItem:hover {
+  opacity: 0.8;
+}
+
+.sortMenuItem.active:hover {
+  opacity: 1;
+}
+
+.sortMenuIndicator {
+  position: absolute;
+  left: 0.7rem;
+  top: 0.6rem;
+  height: 2rem;
+  margin: 0 auto;
+  width: calc(100% - 1.4rem) !important;
+  border-radius: 25px;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  transition: all 300ms ease;
+  z-index: 1;
+}
+
+.searchBar {
+  --gradient-angle: 165deg;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 60%;
+  margin-right: 20px;
+  flex-wrap: nowrap;
+  border-radius: 20px;
+  background: linear-gradient(var(--gradient-angle), var(--gradient-primary-colors));
+  transition: --gradient-angle 0.5s ease-in-out;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: transparent;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 1.5px * 2);
+    height: calc(100% - 1.5px * 2);
+    border-radius: inherit;
+    background-color: #00091a;
+  }
+}
+
+.searchBar form {
+  width: 100%;
+}
+
+.searchBar input {
+  position: relative;
+  width: calc(100% - 40px);
+  height: 100%;
+  padding-right: 15px;
+  font-size: 1.1rem;
+  outline: none;
+  z-index: 100;
+}
+
+.searchBar button {
+  position: relative;
+  padding: 10px 5px 10px 10px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.searchBar button img {
+  width: 20px;
+  height: auto;
+}
+
+.noResults {
+  display: none;
+  padding-top: 1rem;
+  text-align: center;
+  color: #fff;
+  font-size: 1.1rem;
+
+  &.visible {
+    display: block;
+  }
+}
+
+.viewToggle button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.viewToggle button.active {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.viewToggle button img {
+  width: 30px;
+  height: auto;
+  margin: 5px;
+}
+
+.apps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.apps.fade {
+  opacity: 0;
+  transform: scale(0.97);
+  pointer-events: none;
+}
+
+.apps[data-view-visible="false"] {
+  opacity: 0;
+  transform: scale(0.97);
+  pointer-events: none;
+}
+
+.apps[data-view-visible="false"] .actionMenuBtn {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.app {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 90%;
+  z-index: 0;
+  transition: transform 0.4s ease;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: anywhere;
+}
+
+.appInner {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.app:has(.actionMenu.show) {
+  z-index: 20;
+}
+
+.app:hover {
+  transform: scale(1.008);
+  transition: transform 0.3s ease;
+}
+
+.app:has(.actionMenuBtn:active),
+.app:has(.actionMenu:active) {
+  transform: scale(1.008) !important;
+}
+
+.app:active {
+  transform: scale(1.004);
+  transition: transform 0.1s ease;
+}
+
+.appHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 45%;
+}
+
+.appIcon {
+  position: relative;
+  display: inline-block;
+  width: 3.5rem;
+  height: 3.5rem;
+  flex-shrink: 0;
+}
+
+.appIcon img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.purchaseQuantity {
+  position: absolute;
+  bottom: -0.5rem;
+  right: -0.5rem;
+  z-index: 10;
+}
+
+.purchaseQuantity .inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.3rem;
+  border: 1.5px solid transparent;
+  background: linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(to right bottom, var(--gradient-primary-colors)) border-box;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #fff;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(to right bottom, #f0f8fd03 12%, #dcf4fc21 21%, #caeefb33 27%, #d9f3fc00 38%, #edf9fe03 51%, #f8fdff33 58%, #caeefb03 65%, #ffffff03 75%, #ffffff00 84%, #ffffff22 100%);
+    pointer-events: none;
+  }
+}
+
+.purchaseQuantity .max {
+  font-size: 0.6rem;
+}
+
+.appInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.appName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.appDesc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  color: #ccc;
+}
+
+.thumbnail {
+  display: none;
+}
+
+.appPrice {
+  width: 4.5rem;
+  font-size: 1.1rem;
+}
+
+.subscriptionSuffix {
+  font-size: 0.8em;
+}
+
+.appFooter {
+  display: contents;
+}
+
+.ratingDateCont {
+  display: contents;
+  font-size: 0.8rem;
+}
+
+.rating {
+  position: relative;
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.starBg {
+  color: #444;
+}
+
+.starFg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #fbbf24;
+}
+
+.listingDate {
+  font-size: 0.8rem;
+  padding-right: 3rem;
+}
+
+.actionMenuBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: transform 0.25s ease;
+  }
+
+  &:active {
+    transform: scale(1.03);
+    transition: transform 0.15s ease;
+  }
+}
+
+.actionMenuBtn .dot {
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+  min-height: 5px;
+  max-width: 5px;
+  max-height: 5px;
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 40%,
+      #0b8de3 85%,
+      #0251d8 100%);
+  border-radius: 50%;
+}
+
+.actionMenu {
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  padding: 0.6rem 0.7rem;
+  border-radius: 1rem;
+  box-shadow: 1px 0 5px #00091abb;
+  transition: opacity 0.3s ease, visibility 0.3s;
+  will-change: opacity, transform;
+  z-index: 9999;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 1.5px * 2);
+    height: calc(100% - 1.5px * 2);
+    background-color: #00091a;
+    border-radius: 1rem;
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+    border-radius: 1rem;
+    z-index: -2;
+  }
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.actionMenuItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.actionMenuItem span {
+  margin-right: 0.5rem;
+}
+
+.actionMenuItem img {
+  width: 1.25rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.actionMenuItem:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.actionMenuItem.delete {
+  color: #dc2626;
+}
+
+.actionMenuItem.delete img {
+  filter: brightness(0) saturate(100%) invert(29%) sepia(29%) saturate(5530%) hue-rotate(346deg) brightness(89%) contrast(94%);
+}
+
+.editImg,
+.deleteImg {
+  margin-left: 0.4rem;
+}
+
+.editImg {
+  width: 1rem !important;
+  height: auto;
+}
+
+.deleteImg {
+  width: 0.95rem !important;
+  height: auto;
+}
+
+/* グリッド表示 */
+.apps.gridView {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.apps.gridView .app {
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.apps.gridView .appInner {
+  flex: 0 1 auto;
+  justify-content: flex-start;
+  gap: 0;
+}
+
+.apps.gridView .appHeader {
+  width: 100%;
+  flex-direction: column;
+}
+
+.apps.gridView .appInfo {
+  width: fit-content;
+}
+
+.apps.gridView .appName {
+  width: 6rem;
+  text-align: center;
+}
+
+.apps.gridView .purchaseQuantity {
+  right: auto;
+  left: -0.5rem;
+}
+
+.apps.gridView .appDesc,
+.apps.gridView .appPrice,
+.apps.gridView .rating,
+.apps.gridView .listingDate {
+  display: none;
+}
+
+.apps.gridView .actionMenuBtn {
+  align-self: flex-start;
+  height: 1rem;
+  margin-left: -0.5rem;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s, transform 0.25s ease;
+
+  & .dot {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+.apps.gridView .appIcon {
+  transition: transform 0.3s ease;
+}
+
+.apps.gridView .app:hover {
+  transform: scale(1.01);
+}
+
+.apps.gridView .app:has(.actionMenuBtn[data-open="true"]) {
+  transform: scale(1.01);
+}
+
+.apps.gridView .app:hover .appIcon {
+  transform: scale(1.05);
+}
+
+.apps.gridView .app:has(.actionMenuBtn[data-open="true"]) .appIcon {
+  transform: scale(1.05);
+}
+
+.apps.gridView .app:active .appIcon {
+  transform: scale(1.03);
+}
+
+.apps.gridView .app:hover .actionMenuBtn {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.apps.gridView .app:has(.actionMenuBtn:active),
+.apps.gridView .app:has(.actionMenuItem:active) {
+  transform: none !important;
+}
+
+.apps.gridView .app:has(.actionMenuBtn:active) .appIcon,
+.apps.gridView .app:has(.actionMenuItem:active) .appIcon {
+  transform: scale(1.05) !important;
+}
+
+.apps.gridView .actionMenuBtn[data-open="true"] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0s;
+  transform: scale(1.05);
+}
+
+/* カード表示 */
+.apps.cardView {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4.5rem;
+  margin: 0 3rem 3rem 1rem;
+}
+
+.apps.cardView .appInner {
+  position: relative;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0;
+}
+
+.apps.cardView .app {
+  width: 45%;
+  min-width: 340px;
+}
+
+@container (min-width: 1100px) {
+  .apps.cardView .app {
+    width: 29%;
+    min-width: 340px;
+  }
+}
+
+.apps.cardView .app:hover {
+  transform: scale(1.015);
+  transition: transform 0.4s ease;
+}
+
+.apps.cardView .app:active {
+  transform: scale(1.008);
+  transition: transform 0.2s ease;
+}
+
+.apps.cardView .app:has(.actionMenuBtn:active),
+.apps.cardView .app:has(.actionMenuItem:active) {
+  transform: scale(1.015) !important;
+}
+
+.apps.cardView .appHeader {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.apps.cardView .appName {
+  width: calc(100% - 2rem);
+}
+
+.apps.cardView .appDesc {
+  width: 100%;
+}
+
+.apps.cardView .thumbnail {
+  display: block;
+  aspect-ratio: 8 / 5;
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.75rem;
+  border-radius: 10px;
+  background-color: #fffa;
+  overflow: hidden;
+}
+
+.apps.cardView .thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.apps.cardView .thumbnail.noImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.9px solid transparent;
+  border-radius: 10px;
+  background:
+    linear-gradient(to right bottom,
+      #757575 5%,
+      #555 35%,
+      #424242 70%,
+      #222 100%) padding-box,
+    linear-gradient(to bottom right,
+      #6665 0%,
+      #8888 25%,
+      #fff8 50%,
+      #8888 75%,
+      #6665 100%) border-box;
+  color: #ccc;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.apps.cardView .appPrice {
+  align-self: flex-start;
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.apps.cardView .appFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.apps.cardView .ratingDateCont {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1 1 auto;
+  width: 100%;
+  margin-right: 0.5rem;
+  min-width: fit-content;
+  font-size: 0.75rem;
+}
+
+.apps.cardView .listingDate {
+  margin: 0.4rem 0 0.4rem 0.75rem;
+  padding: 0 0 0 0.75rem;
+  color: #ccc;
+  border-left: 1px solid #ccc;
+}
+
+.apps.cardView .actionMenuBtn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0;
+  height: 1.25rem;
+
+  & .dot {
+    width: 4.5px;
+    height: 4.5px;
+  }
+}

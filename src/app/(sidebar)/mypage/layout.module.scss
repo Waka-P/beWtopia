@@ -1,0 +1,13 @@
+.mypageLayout {
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mypageContent {
+  flex: 1 1 auto;
+  margin: 0 0 0 2rem;
+  min-width: 0;
+  height: 100%;
+}

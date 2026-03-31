@@ -1,0 +1,379 @@
+.chatList {
+  width: 300px;
+  /* default */
+  min-width: 250px;
+  max-width: 600px;
+  padding-right: 6px;
+  border-right: 1px solid #1e3a5f;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  overflow: visible; // リサイザーが外に出られるように変更
+
+  &[data-width='0'] {
+    min-width: 0;
+    border-right: none;
+  }
+}
+
+.resizer {
+  width: 10px;
+  background: transparent;
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform: translateX(50%);
+  z-index: 10;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover,
+  &.active {
+    background: #00d4ff11;
+  }
+
+  &.collapsed {}
+}
+
+.handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.5rem;
+  width: 10px;
+  border-radius: 9999px;
+  background-color: #00d4ff;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+
+  .resizer:hover &,
+  .resizer.active &,
+  .resizer.collapsed & {
+    opacity: 1;
+  }
+
+  .chatList[data-width='0'] & {}
+}
+
+.searchContainer {
+  padding: 20px;
+  overflow: hidden; // コンテンツが外に出ないように
+
+  .chatList[data-width='0'] & {
+    display: none;
+  }
+}
+
+.list {
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    min-height: 70px;
+    border-radius: 10px;
+    background: transparent;
+    transition: background 0.3s ease;
+  }
+
+  &.scrolling::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #00ffff, #0b8de3);
+  }
+}
+
+
+
+.chatItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {}
+
+  &.active {
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+
+      background: linear-gradient(to right,
+          #00ffff00 0%,
+          #0ff 15%,
+          #0279e1 85%,
+          #025ada00 100%);
+    }
+
+    /* before：左 → 右に流れる（向き逆） */
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 2px;
+
+      background: linear-gradient(to left,
+          #00ffff00 0%,
+          #0ff 15%,
+          #0279e1 85%,
+          #025ada00 100%);
+
+    }
+  }
+}
+
+.chatItem:hover {
+
+  .unreadCount,
+  .time {
+    display: none;
+  }
+
+  .actionMenuBtn {
+    display: flex;
+  }
+
+}
+
+.chatItem.search {
+  &:hover {
+    .selectSearchedUserIcon {
+      display: inline;
+    }
+  }
+}
+
+.selectSearchedUserIcon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  display: none;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-left: auto;
+  color: #00d4ff;
+}
+
+/* メニューが開いている間は hover が外れても表示を維持 */
+.chatItem.menuOpen {
+
+  .unreadCount,
+  .time {
+    display: none;
+  }
+
+  .actionMenuBtn {
+    display: flex;
+  }
+
+  .actionMenu {
+    display: flex;
+  }
+}
+
+.actionMenuBtn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 1rem;
+  height: 1.3rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.actionMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(to right bottom, var(--gradient-primary-colors)) border-box;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  padding: 0.5rem;
+  min-width: 200px;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+
+  &[data-open='1'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.menuItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+
+  &.dangerAction {
+    color: #ff4d4f;
+  }
+}
+
+.menuIcon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+
+.dot {
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+  min-height: 5px;
+  max-width: 5px;
+  max-height: 5px;
+  border-radius: 50%;
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 40%,
+      #0b8de3 85%,
+      #0251d8 100%);
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: anywhere;
+}
+
+.time {
+  margin-left: 0.5rem;
+  font-size: 12px;
+  color: #7a8a99;
+  flex-shrink: 0;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview {
+  font-size: 13px;
+  line-height: 1.3rem;
+  color: #7a8a99;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unreadCount {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  max-width: 1.3rem;
+  max-height: 1.3rem;
+  min-width: 1.3rem;
+  min-height: 1.3rem;
+  font-weight: bold;
+  font-size: 0.75rem;
+  z-index: 10;
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(to right bottom,
+      var(--gradient-primary-colors));
+}
+
+.unreadCount::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: linear-gradient(to right bottom,
+      #f0f8fd03 12%,
+      #dcf4fc21 21%,
+      #caeefb33 27%,
+      #d9f3fc00 38%,
+      #edf9fe03 51%,
+      #f8fdff33 58%,
+      #caeefb03 65%,
+      #ffffff03 75%,
+      #ffffff00 84%,
+      #ffffff22 100%);
+  opacity: 1;
+}
+
+.unreadCount::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 0.2rem);
+  height: calc(100% - 0.2rem);
+  border-radius: 50%;
+  background-color: #00091a;
+}
+
+.unreadCount .inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  color: #fff;
+}

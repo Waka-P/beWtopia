@@ -1,0 +1,114 @@
+.wrapper {
+  position: relative;
+  border-radius: 50%;
+}
+
+.iconWrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  vertical-align: middle;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  border-radius: 50%;
+  z-index: 99;
+}
+
+.iconWrapper::before {
+  content: "";
+  position: absolute;
+  top: -1.5px;
+  left: -1.5px;
+  width: calc(100% + 3px);
+  height: calc(100% + 3px);
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.icon {
+  border-radius: 50%;
+  user-select: none;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: #0000009a;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  font-size: 14px;
+  border-radius: 50%;
+  transition: opacity 0.25s ease;
+}
+
+.overlay.show {
+  opacity: 1;
+}
+
+.fullOverlay {
+  position: fixed;
+  top: -130px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 100vw;
+  height: 100vh;
+  background: #000000c4;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.fullOverlay.show {
+  opacity: 1;
+}
+
+.socialIcons {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 6.5rem;
+  padding: 5rem 0.3rem 0.05rem 0.3rem;
+  opacity: 0;
+  z-index: 10;
+  clip-path: polygon(35% 0, 65% 0, 100% 60%, 100% 100%, 0 100%, 0 60%);
+  transition:
+    all 0.3s ease,
+    opacity 0.25s ease;
+}
+
+.socialIcons.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* facebookボタン */
+.facebookButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.25s ease;
+}
+
+.facebookButton:hover {
+  transform: scale(1.05);
+  transition: transform 0.25s ease;
+}
+
+.facebookButton:active {
+  transform: scale(1);
+  transition: transform 0.15s ease;
+}

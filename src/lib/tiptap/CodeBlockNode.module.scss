@@ -1,0 +1,35 @@
+.codeBlockNode {
+  border-radius: 0.5rem;
+  overflow: visible;
+  margin: 0.5rem 0;
+  border: 1px solid transparent;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(135deg, #6665 0%, #8888 25%, #fff8 50%, #8888 75%, #6665 100%) border-box;
+}
+
+.codeBlockNode :global(pre) {
+  margin: 0;
+  background: transparent;
+  border-radius: 0;
+  padding: 0.75rem 1rem;
+}
+
+.codeBlockHeader {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 0.5rem 0.5rem 0 0;
+  border-bottom: 1px solid #2d333b;
+}
+
+.codeBlockLanguageLabel {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.75rem;
+  font-size: 0.6rem;
+  color: #6e7681;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  user-select: none;
+  pointer-events: none;
+}

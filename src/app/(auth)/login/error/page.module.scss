@@ -1,0 +1,41 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.logo {
+  width: 300px;
+  height: auto;
+  margin-bottom: 6rem;
+}
+
+.errIcon {
+  width: 80px;
+  height: auto;
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--error)
+}
+
+.message {
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #888;
+}
+
+.loginLink {
+  color: var(--accent);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,348 @@
+.container {
+  min-height: 100dvh;
+  max-width: 1400px;
+  margin: 0 auto;
+  color: #e8faff;
+}
+
+.contentSlider {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.contentWrapper {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.contentPanel {
+  min-width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  gap: 40px;
+  padding: 40px 60px;
+
+  &[inert] {
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.basicInfo {
+  justify-content: space-between;
+}
+
+.leftSide,
+.rightSide {
+  flex: 1;
+}
+
+.formGroup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  margin-bottom: 2rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.formLabel {
+  display: inline-block;
+  align-self: flex-start;
+  color: #0ff;
+}
+
+.inputTextWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  span {
+    white-space: nowrap;
+    color: white;
+  }
+}
+
+.formInput {
+  --gradient-angle: 135deg;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1.9px solid transparent;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  outline: none;
+  color: white;
+
+  &::placeholder {
+    color: #888;
+  }
+}
+
+.formTextarea {
+  --gradient-angle: 135deg;
+  resize: none;
+  width: 100%;
+  height: 300px;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1.9px solid transparent;
+  outline: none;
+  color: white;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  border-radius: 0.25rem;
+  outline: none;
+
+  &::placeholder {
+    color: #888;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.errAndCounter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+
+.errMessage {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+}
+
+.counter {
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.counterError {
+  color: #ff6b6b;
+}
+
+// 募集設定ページ
+.recruitmentSettings {
+  display: flex;
+  flex-direction: column;
+}
+
+.settingsCont {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+}
+
+.rolesCard {
+  flex: 1;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  padding: 24px;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(135deg, var(--gradient-primary-colors)) border-box;
+}
+
+.cardTitle {
+  color: #38f3ff;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+}
+
+.roleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.roleLabel {
+  min-width: 100px;
+  color: #e8faff;
+  font-weight: 600;
+
+  &.leaderLabel {
+    flex-grow: 1;
+  }
+}
+
+.roleNameInput {
+  flex: 1;
+}
+
+.percentageInput {
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.percentSign {
+  color: #38f3ff;
+  font-weight: 600;
+}
+
+.removeRoleBtn {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+
+  .removeIcon {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+.removeRoleSpacer {
+  display: inline-block;
+  width: 1.75rem;
+  flex-shrink: 0;
+}
+
+.addRoleBtn {
+  width: 100%;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  border-radius: 999px;
+  padding: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  text-align: center;
+  transition: all 0.2s;
+
+  &:hover {
+    scale: 1.02;
+  }
+
+  &:active {
+    scale: 1.01;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .plusIcon {
+    margin-right: 8px;
+    font-size: 1.2rem;
+    line-height: 1;
+    font-weight: 800;
+  }
+}
+
+.bewtsBtn {
+  width: fit-content;
+  margin: 3rem auto 0 auto;
+  padding: 12px 23px;
+  text-align: center;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%);
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.25s ease;
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &:not(.disabled):hover {
+    transform: scale(1.03);
+  }
+
+  &:not(.disabled):active {
+    transform: scale(1.01);
+  }
+}
+
+/* Navigation */
+.navigation {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.prevBtn,
+.nextBtn {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.prevBtn {
+  background: none;
+
+  &.hidden {
+    visibility: hidden;
+  }
+}
+
+.nextBtn {
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%);
+  color: white;
+
+  &:not(:disabled):hover {
+    opacity: 0.9;
+  }
+
+  &.hidden {
+    visibility: hidden;
+  }
+}

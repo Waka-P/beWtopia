@@ -1,0 +1,67 @@
+.body {
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.message {
+  margin: 0;
+  line-height: 1.6;
+  color: #fff;
+  font-size: 1.05rem;
+}
+
+.appName {
+  margin-top: 1.5rem;
+  color: #10ffff;
+  font-weight: 600;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: anywhere;
+}
+
+.actions {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-around;
+  width: 100%;
+  padding: 16px 20px;
+}
+
+.cancelBtn,
+.confirmBtn {
+  appearance: none;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.cancelBtn {
+  border: none;
+  background: transparent;
+  color: #fff;
+}
+
+.cancelBtn:hover {
+  opacity: 0.8;
+}
+
+.confirmBtn {
+  border: none;
+  background: #f00;
+  color: #fff;
+  font-weight: 600;
+}
+
+.confirmBtn:disabled {
+  background: rgba(136, 136, 136, 0.2);
+  color: #666;
+  cursor: not-allowed;
+}
+
+.confirmBtn:not(:disabled):hover {
+  opacity: 0.85;
+}

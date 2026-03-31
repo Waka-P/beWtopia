@@ -1,0 +1,91 @@
+.languagePicker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.languagePickerBtn {
+  background: #00091A88;
+  color: #c9d1d9;
+  border: 1px solid #444c56;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-family: 'JetBrainsMono', monospace;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.caret {
+  opacity: 0.7;
+  font-size: 0.8rem;
+}
+
+.languageMenu {
+  position: absolute;
+  display: block;
+  background: #0b0f14;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%) border-box;
+  cursor: text;
+  padding: 6px;
+  min-width: 200px;
+  z-index: 10000;
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.6);
+}
+
+.languageMenuWrap {
+  padding: 0;
+}
+
+.languageMenuScroll {
+  max-height: 200px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.languageMenuScroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.languageMenuScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.languageMenuScroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00ffff, #0b8de3);
+  border-radius: 50px;
+  min-height: 50px;
+}
+
+.languageMenuItem {
+  display: block;
+  width: 100%;
+  background: transparent;
+  color: #c9d1d9;
+  padding: 8px 10px;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.languageMenuItem:hover {
+  background: #11161b;
+}
+
+.languageSelected {
+  color: #00d4ff;
+  font-weight: 600;
+}

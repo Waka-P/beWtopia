@@ -1,0 +1,999 @@
+:global(body) {
+  --bg: #0a0f1e;
+}
+
+.chatArea {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: calc(100% - 10px);
+  background-color: #00091ae8;
+  z-index: 999;
+}
+
+.headerTitle {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  transition: all 0.2s ease;
+  transform-origin: left;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: anywhere;
+}
+
+.headerTitle:hover {
+  transform: scale(1.03);
+}
+
+.headerTitle:active {
+  transform: scale(1.01);
+}
+
+.headerTitleSkeleton {
+  display: inline-block;
+  height: 18px;
+  width: 160px;
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  background: #00878738;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg,
+        #020713 0%,
+        #00ffff38 20%,
+        #00ffff80 38%,
+        #00ffff38 60%,
+        #020713 100%);
+    transform: translateX(-100%);
+    animation: chat-skeleton-shimmer 1.4s ease-in-out infinite;
+  }
+}
+
+.headerMembers {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.headerTools {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-right: 3rem;
+}
+
+.headerToolButton {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(1.03);
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+}
+
+.messagesCont {
+  padding: 0.5rem 0.5rem 0.5rem 0;
+  flex: 1;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 10px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+    border-radius: 10px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #00ffff, #0b8de3) !important;
+    border-radius: 10px !important;
+    min-height: 70px;
+
+    &:hover {
+      background: linear-gradient(to bottom, #00ffffcc, #0b8de3cc) !important;
+    }
+  }
+}
+
+.messages {
+  padding: 3rem 30px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+
+  &::-webkit-scrollbar {
+    width: 10px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+    border-radius: 10px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #00ffff, #0b8de3) !important;
+    border-radius: 10px !important;
+    min-height: 50px;
+
+    &:hover {
+      background: linear-gradient(to bottom, #00ffffcc, #0b8de3cc) !important;
+    }
+  }
+}
+
+// ─── メッセージ欄スケルトンローディング ─────────────────────────────
+
+.messagesSkeleton {
+  position: absolute;
+  left: 2rem;
+  right: 2rem;
+  top: 5rem;
+  margin-top: 1.5rem;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.messageSkeletonRow {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  animation: chat-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.messageSkeletonRowLeft {
+  justify-content: flex-start;
+}
+
+.messageSkeletonRowRight {
+  justify-content: flex-end;
+}
+
+.messageSkeletonBubble {
+  position: relative;
+  padding: 12px 14px;
+  border-radius: 1rem;
+  min-width: 200px;
+  max-width: 70%;
+  overflow: hidden;
+  background: #00ffff11;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-35deg,
+        #fff1 5%,
+        #fff0 15%,
+        #fff1 45%,
+        #fff2 60%,
+        #fff1 90%,
+        #fff0 100%);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-35deg,
+        #020713 0%,
+        rgba(0, 255, 255, 0.22) 20%,
+        rgba(0, 255, 255, 0.5) 38%,
+        rgba(0, 255, 255, 0.22) 60%,
+        #020713 100%);
+    transform: translateX(-100%);
+    animation: chat-skeleton-shimmer 1.4s ease-in-out infinite;
+  }
+}
+
+.messageSkeletonContent {
+  position: relative;
+  height: 14px;
+  border-radius: 4px;
+  background: transparent;
+}
+
+@keyframes chat-skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes chat-skeleton-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.messagesSkeletonVisible {
+  opacity: 1;
+}
+
+.messagesSkeletonHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.messagesContentFade {
+  transition: opacity 0.25s ease-in-out;
+}
+
+.messagesContentVisible {
+  opacity: 1;
+}
+
+.messagesContentHidden {
+  opacity: 0;
+}
+
+// 日付グループのコンテナ
+.dateGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// 日付ラベル (sticky)
+.dateLabelWrapper {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  padding: 1.7rem 0 8px;
+}
+
+.dateLabel {
+  position: relative;
+  padding: 0.4rem 0.8rem;
+  border: 1.3px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(to right bottom, var(--gradient-form-colors)) border-box;
+  font-size: 0.8rem;
+  color: #0ffd;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-35deg,
+        #fff1 5%,
+        #fff0 15%,
+        #fff2 25%,
+        #fff0 35%,
+        #fff1 45%,
+        #fff0 50%,
+        #fff2 60%,
+        #fff0 85%,
+        #fff1 90%,
+        #fff0 100%);
+    pointer-events: none;
+  }
+}
+
+// ─── メッセージ行 ───────────────────────────────────────────
+// 横並び: [avatar] [messageSide]
+// 自分のとき: row-reverse で右寄せ
+
+.messageRow {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-bottom: 16px;
+
+  &.own {
+    flex-direction: row-reverse;
+  }
+}
+
+.messageRightSide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .own & {
+    align-items: flex-end;
+  }
+}
+
+.messageAndTime {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 0.5rem;
+
+  .own & {
+    flex-direction: row;
+  }
+}
+
+.messageAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.messageAvatarWrapper {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.senderName {
+  margin-bottom: 0.5rem;
+  font-size: 13px;
+  font-weight: 500;
+  color: #a0b4c8;
+}
+
+// メッセージバブル
+.messageWrapper {
+  max-width: 480px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 12px 16px;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(135deg, #6665 0%, #8888 25%, #fff8 50%, #8888 75%, #6665 100%) border-box;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #fff;
+
+  .own & {
+    border-radius: 1rem;
+    background: linear-gradient(#00091A, #00091A) padding-box,
+      linear-gradient(to right bottom, var(--gradient-primary-colors)) border-box;
+  }
+
+  &.emojiOnly {
+    /* 絵文字のみ（3個以下）のときは背景透明にして余白を小さくする */
+    background: transparent !important;
+    border: none !important;
+    padding: 6px 8px;
+
+    .messageContent :global(.ProseMirror) {
+      padding: 0 2px;
+      text-align: center;
+      background: transparent !important;
+    }
+  }
+
+  &.editingTarget {
+    box-shadow: 0 0 5px 2px #00ffffcc;
+  }
+}
+
+.messageContent {
+  :global(.ProseMirror) {
+    outline: none;
+    color: #fff;
+    padding: 0 5px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+    line-break: anywhere;
+
+    .chat-search-highlight {
+      background: rgba(255, 255, 0, 0.4);
+      border-radius: 2px;
+      padding: 0 1px;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    s {
+      text-decoration: line-through;
+    }
+
+    u {
+      text-decoration: underline;
+    }
+
+    a {
+      color: #00d4ff;
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:hover {
+        color: #00e5ff;
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+
+    ul,
+    ol {
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+
+    ul {
+      list-style-type: disc;
+    }
+
+    ol {
+      list-style-type: decimal;
+    }
+
+    blockquote {
+      border-left: 2px solid #555;
+      margin: 0.5rem 0;
+      padding-left: 1rem;
+      color: #aaa;
+    }
+
+    pre {
+      min-width: 300px;
+      border-radius: 0.5rem;
+      color: #c9d1d9;
+      font-family: 'JetBrainsMono', 'Courier New', Courier, monospace;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0;
+      background: transparent;
+
+      code {
+        background: none;
+        color: inherit;
+        font-size: 0.8rem;
+        padding: 0;
+        display: block;
+        white-space: pre;
+      }
+    }
+
+    code {
+      border: 1.5px solid transparent;
+      background: linear-gradient(#00091A, #00091A) padding-box,
+        linear-gradient(135deg, #6665 0%, #8888 25%, #fff8 50%, #8888 75%, #6665 100%) border-box;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.85rem;
+      font-family: 'JetBrainsMono', 'Courier New', Courier, monospace;
+    }
+  }
+}
+
+// 時刻ラベル
+.time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  align-self: flex-end;
+  font-size: 11px;
+  color: #7a8a99;
+}
+
+.own .time {
+  align-items: flex-end;
+}
+
+.readStatus {
+  color: #0586a0;
+  font-weight: 500;
+}
+
+// リアクションバー
+.reactionBarWrapper {
+  position: relative;
+  margin-top: 0.75rem;
+}
+
+// QuickReactionsの位置指定
+.quickReactions {
+  top: -65px;
+  right: 0;
+}
+
+.emojiPicker {
+  top: 65px;
+  right: 0;
+  left: auto;
+}
+
+.attachment {
+  margin-top: 8px;
+  max-width: 100%;
+}
+
+/* 非画像ファイル（チャット内表示） */
+.attachmentFile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 220px;
+  max-width: 480px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(to right bottom, var(--gradient-form-colors)) border-box;
+  font-size: 0.8rem;
+  color: #0ffd;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-35deg,
+        #fff1 5%,
+        #fff0 15%,
+        #fff2 25%,
+        #fff0 35%,
+        #fff1 45%,
+        #fff0 50%,
+        #fff2 60%,
+        #fff0 85%,
+        #fff1 90%,
+        #fff0 100%);
+    pointer-events: none;
+  }
+}
+
+.fileIcon {
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #f0f8fd, #caeefb);
+  color: #00091a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.fileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.fileName {
+  color: #ffffff;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileExt {
+  color: #7a8a99;
+  font-size: 11px;
+}
+
+.downloadBtn {
+  margin-left: auto;
+  background: transparent;
+  color: #00d4ff;
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+
+a.downloadBtn:hover {
+  background: #0008;
+}
+
+/* 添付画像を最大2列でレイアウトするグリッド */
+.attachmentsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+/* 単一画像はグリッド2列分を占有して大きく表示 */
+.attachmentsGrid>.attachment:only-child {
+  grid-column: 1 / -1;
+}
+
+/* 非画像ファイルは1列表示（グリッド幅を全幅にする） */
+.attachmentsGrid>.attachmentFileWrapper {
+  grid-column: 1 / -1;
+}
+
+/* サムネイル用ラッパー（クリックで拡大） */
+.attachmentThumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0b1220, #071025);
+  height: 220px;
+  /* デフォルトの高さ（2カラム時） */
+}
+
+/* 単一画像では高さを大きくする */
+.attachmentsGrid>.attachment:only-child .attachmentThumb {
+  height: 360px;
+}
+
+.attachmentImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: zoom-in;
+  transition: transform 0.18s ease, filter 0.18s ease;
+  filter: saturate(0.95) brightness(0.98);
+
+  &:hover {
+    transform: scale(1.02);
+    filter: saturate(1) brightness(1.03);
+  }
+}
+
+/* ズーム（拡大）インジケータ */
+.zoomIcon {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: #0008;
+  color: #fff;
+  padding: 0.4rem;
+  border-radius: 6px;
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+  pointer-events: none;
+}
+
+.memberAvatars {
+  display: flex;
+  align-items: center;
+}
+
+.memberBubble {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  box-shadow: -1.5px 0 2px var(--bg);
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -10px;
+}
+
+.memberBubble:first-child {
+  margin-left: 0;
+}
+
+.memberAvatar {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+  box-shadow: -1.5px 0 2px var(--bg);
+}
+
+.leaderBadge {
+  position: absolute;
+  top: -9.7px;
+  left: -4.9px;
+  width: 1.1rem;
+  height: auto;
+  z-index: 0;
+}
+
+.moreBubble {
+  --gradient-angle: 135deg;
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background:
+    linear-gradient(#00091add, #00091add) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #6665 0%,
+      #8888 25%,
+      #fff8 50%,
+      #8888 75%,
+      #6665 100%) border-box;
+  color: #e5e7eb;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  z-index: 3;
+}
+
+.moreBubble::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(-25deg,
+      #f0f8fd03 12%,
+      #dcf4fc21 21%,
+      #caeefb33 27%,
+      #d9f3fc00 38%,
+      #edf9fe03 51%,
+      #f8fdff33 58%,
+      #caeefb03 65%,
+      #ffffff03 75%,
+      #ffffff00 84%,
+      #ffffff22 100%);
+}
+
+:global(.react-photo-view__img) {
+  max-width: none !important;
+  max-height: 100vh !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+:global(.react-photo-view__content) {
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.attachmentLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  background: #1a2942;
+  border-radius: 8px;
+  color: #00d4ff;
+  text-decoration: none;
+  transition: background 0.2s;
+  font-size: 14px;
+
+  &:hover {
+    background: #243a5a;
+  }
+}
+
+.messageRow.own .attachmentLink {
+  background: #0d1b2a;
+  border: 1px solid #1e3a5f;
+
+  &:hover {
+    background: #1a2942;
+  }
+}
+
+.chatEditorWrapper {
+  padding: 0.85rem 1.25rem;
+}
+
+.editingNotice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: -1.5rem;
+  padding: 0.5rem 1rem 2rem 1rem;
+  border-radius: 8px;
+  background: #00ffff22;
+  color: #fffa;
+  font-size: 12px;
+  z-index: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-35deg,
+        #fff1 5%,
+        #fff0 15%,
+        #fff2 25%,
+        #fff0 35%,
+        #fff1 45%,
+        #fff0 50%,
+        #fff2 60%,
+        #fff0 85%,
+        #fff1 90%,
+        #fff0 100%);
+    pointer-events: none;
+  }
+
+  button {
+    border: none;
+    background: transparent;
+    color: #0ff;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.chatEditorWrapperDisabled {
+  cursor: not-allowed;
+}
+
+.chatEditorDisabled {
+  position: relative;
+  opacity: 0.5;
+  filter: grayscale(0.6);
+  pointer-events: none;
+}
+
+.inputButtons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 5px;
+}
+
+.actionBtn {
+  background: transparent;
+  border: none;
+  color: #00d4ff;
+  cursor: pointer;
+  font-size: 24px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #1a2942;
+  }
+}
+
+.sendBtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #00d4ff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+
+  &:hover {
+    background: #00b8e6;
+    transform: scale(1.05);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: #0a1929;
+  }
+}
+
+.actionMenu {
+  position: absolute;
+  bottom: 70px;
+  left: 30px;
+  background: #1a2332;
+  border: 1px solid #2a3f5f;
+  border-radius: 8px;
+  padding: 5px 0;
+  min-width: 200px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.menuItem {
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #fff;
+  transition: background 0.2s;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+
+  &:hover {
+    background: #2a3f5f;
+  }
+}
+
+.messageFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

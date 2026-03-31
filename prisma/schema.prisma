@@ -1,0 +1,1232 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum PaymentMethod {
+  W // Wコイン
+  C // クレカ
+}
+
+enum SalesFormat {
+  P // 買い切り
+  S // サブスク
+}
+
+enum CheckoutStatus {
+  CREATED
+  COMPLETED
+  CANCELED
+}
+
+model App {
+  id          Int     @id @default(autoincrement()) @map("f_app_id")
+  publicId    String  @unique @db.Char(21)
+  name        String  @map("f_app_name") @db.VarChar(50)
+  description String  @map("f_description") @db.Text
+  summary     String  @map("f_summary") @db.VarChar(50)
+  rating      Decimal @map("f_rating") @db.Decimal(2, 1)
+
+  appFileKey       String?  @map("f_app_file_key") @db.VarChar(255)
+  appIconUrl       String?  @map("f_app_icon_url") @db.Text
+  appFileSizeBytes Int?     @map("f_app_file_size_bytes")
+  createdAt        DateTime @default(now()) @map("f_created_at")
+  updatedAt        DateTime @updatedAt @map("f_updated_at")
+
+  ownerId Int?
+  owner   User? @relation(fields: [ownerId], references: [id])
+
+  salesPlans     AppSalesPlan[]
+  trial          AppTrial?
+  trialUsages    AppTrialUsage[]
+  images         AppImage[]
+  reviews        AppReview[]
+  purchases      PurchaseHistory[]
+  tags           AppTag[]
+  paymentMethods AppPaymentMethod[]
+  cartItems      CartItem[]
+  checkoutItems  CheckoutItem[]
+  notifications  Notification[]
+  favorites      AppFavorite[]
+  hiddenByUsers  HiddenApp[]
+
+  bewtsProjectId Int?          @map("f_bewts_project_id")
+  bewtsProject   BewtsProject? @relation(fields: [bewtsProjectId], references: [id])
+
+  @@map("apps")
+}
+
+model AppPaymentMethod {
+  id     Int           @id @default(autoincrement())
+  method PaymentMethod @map("f_payment_method")
+
+  appId Int @map("f_app_id")
+  app   App @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@unique([appId, method])
+  @@map("app_payment_methods")
+}
+
+model AppSalesPlan {
+  id          Int         @id @default(autoincrement())
+  salesFormat SalesFormat @map("f_sales_format_id")
+  price       Int         @map("f_price")
+
+  appId Int @map("f_app_id")
+  app   App @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  purchases     PurchaseHistory[]
+  checkoutItems CheckoutItem[]
+
+  @@unique([appId, salesFormat])
+  @@map("app_sales_plans")
+}
+
+model AppTrial {
+  id           Int     @id @default(autoincrement())
+  trialDays    Int     @map("f_trial_days")
+  trialFileKey String? @map("f_trial_file_key") @db.VarChar(255)
+
+  appId Int @unique @map("f_app_id")
+  app   App @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@map("app_trials")
+}
+
+// ユーザーごとのお試し開始日時
+model AppTrialUsage {
+  id        Int      @id @default(autoincrement()) @map("f_trial_usage_id")
+  startedAt DateTime @default(now()) @map("f_started_at")
+
+  appId  Int @map("f_app_id")
+  userId Int @map("f_user_id")
+
+  app  App  @relation(fields: [appId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([appId, userId])
+  @@index([userId])
+  @@map("app_trial_usages")
+}
+
+model AppImage {
+  id           Int    @id @default(autoincrement()) @map("f_app_img_id")
+  displayOrder Int    @map("f_display_order")
+  imageUrl     String @map("f_img_url") @db.Text
+
+  appId Int @map("f_app_id")
+  app   App @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@index([appId])
+  @@map("app_images")
+}
+
+model PurchaseHistory {
+  id          Int      @id @default(autoincrement())
+  purchasedAt DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  appId Int
+  app   App @relation(fields: [appId], references: [id])
+
+  salesPlanId Int
+  salesPlan   AppSalesPlan @relation(fields: [salesPlanId], references: [id])
+
+  @@index([userId])
+  @@map("purchase_histories")
+}
+
+model AppReview {
+  id     Int     @id @default(autoincrement()) @map("f_app_review_id")
+  body   String  @map("f_app_review_body") @db.Text
+  rating Decimal @map("f_app_rating") @db.Decimal(2, 1)
+
+  appId  Int @map("f_app_id")
+  userId Int @map("f_user_id")
+
+  createdAt DateTime @default(now()) @map("f_created_at")
+  updatedAt DateTime @updatedAt @map("f_updated_at")
+
+  app  App  @relation(fields: [appId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([appId, userId])
+  @@index([appId])
+  @@map("app_reviews")
+}
+
+// お気に入りアプリ
+model AppFavorite {
+  appId  Int @map("f_app_id")
+  userId Int @map("f_user_id")
+
+  app  App  @relation(fields: [appId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([appId, userId])
+  @@index([userId])
+  @@map("app_favorites")
+}
+
+// 非表示アプリ
+model HiddenApp {
+  userId Int @map("f_user_id")
+  appId  Int @map("f_hidden_app_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  app  App  @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@id([userId, appId])
+  @@index([appId])
+  @@map("hidden_apps")
+}
+
+model Tag {
+  id   Int    @id @default(autoincrement()) @map("f_tag_id")
+  name String @unique @db.VarChar(30)
+
+  apps     AppTag[]
+  users    UserTag[]
+  requests RequestTag[]
+
+  @@map("tags")
+}
+
+model AppTag {
+  appId Int @map("f_app_id")
+  tagId Int @map("f_tag_id")
+
+  app App @relation(fields: [appId], references: [id], onDelete: Cascade)
+  tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([appId, tagId])
+  @@map("app_tags")
+}
+
+model UserTag {
+  userId Int @map("f_user_id")
+  tagId  Int @map("f_tag_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([userId, tagId])
+  @@map("user_tags")
+}
+
+model Job {
+  id   Int    @id @default(autoincrement()) @map("f_job_id")
+  name String @unique @map("f_job_name") @db.VarChar(20)
+
+  users UserJob[]
+
+  @@map("jobs")
+}
+
+model UserJob {
+  userId Int @map("f_user_id")
+  jobId  Int @map("f_job_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job  Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@id([userId, jobId])
+  @@index([jobId])
+  @@map("user_jobs")
+}
+
+// 新規: スキル（Skill） - Job と同様の構造。ユーザが自由に追加できない参照テーブル。
+model Skill {
+  id   Int    @id @default(autoincrement()) @map("f_skill_id")
+  name String @unique @map("f_skill_name") @db.VarChar(20)
+
+  users       UserSkill[]
+  bewtsSkills BewtsSkill[]
+
+  @@map("skills")
+}
+
+model UserSkill {
+  userId  Int @map("f_user_id")
+  skillId Int @map("f_skill_id")
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([userId, skillId])
+  @@index([skillId])
+  @@map("user_skills")
+}
+
+model AppTemplate {
+  id   Int    @id @default(autoincrement()) @map("f_template_id")
+  name String @map("f_template_name") @db.VarChar(50)
+  body String @map("f_template_body") @db.Text
+
+  userId Int?  @map("f_user_id")
+  user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("app_templates")
+}
+
+model User {
+  id               Int               @id @default(autoincrement())
+  publicId         String            @unique @db.Char(21)
+  achievements     String?           @db.Text
+  coinBalance      Int               @default(0)
+  externalLink     String?           @db.Text
+  selfIntro        String?           @db.Text
+  email            String            @unique @db.VarChar(255)
+  name             String            @db.VarChar(255)
+  rating           Decimal?          @db.Decimal(2, 1)
+  emailVerified    Boolean           @default(false)
+  image            String?           @db.Text
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  sessions         Session[]
+  accounts         Account[]
+  apps             App[]
+  appReviews       AppReview[]
+  purchases        PurchaseHistory[]
+  templates        AppTemplate[]
+  userTags         UserTag[]
+  jobs             UserJob[]
+  skills           UserSkill[]
+  carts            Cart[]
+  requests         Request[]
+  requestReactions RequestReaction[]
+  emojiStats       UserEmojiStats[]
+  privacySettings  PrivacySetting[]
+  checkoutSessions CheckoutSession[]
+  favoriteApps     AppFavorite[]
+
+  chatRoomMembers      ChatRoomMember[]
+  chatMessages         ChatMessage[]
+  chatMessageReactions ChatMessageReaction[]
+  chatMessageReads     ChatMessageRead[]
+
+  receivedCoinTransactions CoinTransaction[] @relation("ReceiverTransactions")
+  sentCoinTransactions     CoinTransaction[] @relation("SenderTransactions")
+
+  // チャットオーダー（依頼者/受注者）
+  chatOrdersRequested ChatOrder[] @relation("ChatOrderRequester")
+  chatOrdersTarget    ChatOrder[] @relation("ChatOrderTarget")
+
+  followers  UserFollow[] @relation("UserFollowsFollowing")
+  followings UserFollow[] @relation("UserFollowsFollower")
+
+  blockedUsers   UserBlock[] @relation("UserBlocksBlocker")
+  blockedByUsers UserBlock[] @relation("UserBlocksBlocked")
+
+  hiddenApps HiddenApp[]
+
+  hiddenUsers   HiddenUser[] @relation("HiddenUsersOwner")
+  hiddenByUsers HiddenUser[] @relation("HiddenUsersHidden")
+
+  // Bewts関連
+  bewtsProjects                 BewtsProject[]             @relation("BewtsProjectLeader")
+  bewtsRoomMembers              BewtsRoomMember[]
+  bewtsMessages                 BewtsMessage[]
+  bewtsMessageReactions         BewtsMessageReaction[]
+  bewtsMessageReads             BewtsMessageRead[]
+  bewtsPermissions              BewtsPermission[]
+  bewtsGanttTaskAssignments     BewtsGanttTask[]
+  bewtsGanttTaskAssignmentLinks BewtsGanttTaskAssignment[] @relation("BewtsGanttTaskAssignmentToUser")
+  bewtsJoinRequests             BewtsJoinRequest[]
+
+  // アプリお試し利用履歴
+  appTrialUsages AppTrialUsage[]
+
+  // 通知関連
+  notifications               Notification[]
+  notificationActions         Notification[]              @relation("NotificationActor")
+  notificationSetting         NotificationSetting?
+  bewtsPermissionCapabilities BewtsPermissionCapability[]
+
+  @@map("users")
+}
+
+model UserFollow {
+  followerId  Int @map("f_follower_id")
+  followingId Int @map("f_following_id")
+
+  follower  User @relation("UserFollowsFollower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("UserFollowsFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+  @@index([followingId])
+  @@map("user_follows")
+}
+
+model UserBlock {
+  blockedId Int @map("f_blocked_id")
+  blockerId Int @map("f_blocker_id")
+
+  blocked User @relation("UserBlocksBlocked", fields: [blockedId], references: [id], onDelete: Cascade)
+  blocker User @relation("UserBlocksBlocker", fields: [blockerId], references: [id], onDelete: Cascade)
+
+  @@id([blockedId, blockerId])
+  @@index([blockerId])
+  @@map("user_blocks")
+}
+
+// 非表示ユーザ
+model HiddenUser {
+  userId       Int @map("f_user_id")
+  hiddenUserId Int @map("f_hidden_user_id")
+
+  user       User @relation("HiddenUsersOwner", fields: [userId], references: [id], onDelete: Cascade)
+  hiddenUser User @relation("HiddenUsersHidden", fields: [hiddenUserId], references: [id], onDelete: Cascade)
+
+  @@id([userId, hiddenUserId])
+  @@index([hiddenUserId])
+  @@map("hidden_users")
+}
+
+model Cart {
+  id     Int  @id @default(autoincrement()) @map("f_cart_id")
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id          Int         @id @default(autoincrement()) @map("f_cart_item_id")
+  cartId      Int         @map("f_cart_id")
+  appId       Int         @map("f_app_id")
+  salesFormat SalesFormat @map("f_sales_type_id")
+
+  cart          Cart           @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  app           App            @relation(fields: [appId], references: [id], onDelete: Cascade)
+  checkoutItems CheckoutItem[]
+
+  @@index([cartId])
+  @@index([appId])
+  @@map("cart_items")
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?  @db.Text
+  userAgent String?  @db.Text
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("sessions")
+}
+
+model Account {
+  id                    Int       @id @default(autoincrement())
+  accountId             String    @db.Text
+  providerId            String    @db.Text
+  userId                Int
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  idToken               String?   @db.Text
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?   @db.Text
+  password              String?   @db.Text
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         Int      @id @default(autoincrement())
+  identifier String   @db.Text
+  value      String   @db.Text
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier(length: 191)])
+  @@map("verifications")
+}
+
+model Request {
+  id        Int      @id @default(autoincrement()) @map("f_request_id")
+  publicId  String   @unique @db.Char(21)
+  title     String   @map("f_title") @db.VarChar(100)
+  content   String   @map("f_content") @db.Text
+  createdAt DateTime @default(now()) @map("f_created_at")
+  updatedAt DateTime @updatedAt @map("f_updated_at")
+
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tags      RequestTag[]
+  reactions RequestReaction[]
+
+  @@index([userId])
+  @@map("requests")
+}
+
+model RequestTag {
+  requestId Int @map("f_request_id")
+  tagId     Int @map("f_tag_id")
+
+  request Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([requestId, tagId])
+  @@map("request_tags")
+}
+
+model RequestReaction {
+  id        Int      @id @default(autoincrement()) @map("f_reaction_id")
+  emoji     String   @map("f_emoji") @db.VarChar(10)
+  createdAt DateTime @default(now()) @map("f_created_at")
+
+  requestId Int @map("f_request_id")
+  userId    Int @map("f_user_id")
+
+  request Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([requestId, userId, emoji])
+  @@index([requestId])
+  @@index([userId])
+  @@map("request_reactions")
+}
+
+model UserEmojiStats {
+  id        Int      @id @default(autoincrement()) @map("f_stats_id")
+  emoji     String   @map("f_emoji") @db.VarChar(10)
+  useCount  Int      @default(0) @map("f_use_count")
+  updatedAt DateTime @updatedAt @map("f_updated_at")
+
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, emoji])
+  @@index([userId, useCount])
+  @@map("user_emoji_stats")
+}
+
+model PrivacyCategory {
+  id   Int    @id @default(autoincrement()) @map("f_privacy_category_id")
+  name String @map("f_category_name") @db.VarChar(20)
+
+  settings PrivacySetting[]
+
+  @@map("privacy_categories")
+}
+
+model PrivacySetting {
+  id        Int     @id @default(autoincrement()) @map("f_privacy_setting_id")
+  isEnabled Boolean @default(true) @map("f_is_enabled")
+
+  privacyCategoryId Int             @map("f_privacy_category_id")
+  privacyCategory   PrivacyCategory @relation(fields: [privacyCategoryId], references: [id], onDelete: Cascade)
+
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, privacyCategoryId])
+  @@index([privacyCategoryId])
+  @@index([userId])
+  @@map("privacy_settings")
+}
+
+model ChatRoom {
+  id        Int      @id @default(autoincrement()) @map("f_room_id")
+  publicId  String   @unique @db.Char(21)
+  createdAt DateTime @default(now()) @map("f_created_at")
+
+  members       ChatRoomMember[]
+  messages      ChatMessage[]
+  notifications Notification[]
+
+  @@map("chat_rooms")
+}
+
+model ChatRoomMember {
+  roomId Int @map("f_room_id")
+  userId Int @map("f_user_id")
+
+  // 新: ユーザー単位での表示/削除フラグ
+  isHidden  Boolean   @default(false) @map("f_is_hidden")
+  deletedAt DateTime? @map("f_deleted_at")
+
+  room ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([roomId, userId])
+  @@index([userId])
+  @@map("chat_room_members")
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement()) @map("f_message_id")
+  publicId  String   @unique @db.Char(21)
+  content   String?  @map("f_msg_body") @db.Text
+  createdAt DateTime @default(now()) @map("f_created_at")
+
+  roomId Int @map("f_room_id")
+  userId Int @map("f_user_id")
+
+  room ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // このメッセージに紐づくオーダー（あれば）
+  order ChatOrder?
+
+  attachments ChatMessageAttachment[]
+  reactions   ChatMessageReaction[]
+  reads       ChatMessageRead[]
+
+  @@index([roomId])
+  @@index([userId])
+  @@map("chat_messages")
+}
+
+model ChatMessageAttachment {
+  id           Int     @id @default(autoincrement()) @map("f_msg_img_id")
+  url          String  @map("f_img_url") @db.Text
+  type         String  @default("image") @map("f_type") @db.VarChar(100)
+  name         String? @map("f_name") @db.VarChar(255)
+  displayOrder Int?    @map("f_display_order")
+
+  messageId Int         @map("f_message_id")
+  message   ChatMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@index([messageId])
+  @@map("chat_message_attachments")
+}
+
+model ChatMessageReaction {
+  id        Int      @id @default(autoincrement()) @map("f_reaction_id")
+  emoji     String   @map("f_emoji") @db.VarChar(10)
+  createdAt DateTime @default(now()) @map("f_created_at")
+
+  messageId Int @map("f_message_id")
+  userId    Int @map("f_user_id")
+
+  message ChatMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userId, emoji])
+  @@index([messageId])
+  @@index([userId])
+  @@map("chat_message_reactions")
+}
+
+model ChatMessageRead {
+  messageId Int      @map("f_message_id")
+  userId    Int      @map("f_user_id")
+  readAt    DateTime @default(now()) @map("f_read_at")
+
+  message ChatMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([messageId, userId])
+  @@index([messageId])
+  @@index([userId])
+  @@map("chat_message_reads")
+}
+
+// チャット上でやり取りされるアプリ開発オーダー
+enum ChatOrderStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// 希望金額の単位
+enum ChatOrderPriceUnit {
+  YEN // 日本円
+  W // Wコイン
+  BOTH // 円とWの両方を表示
+}
+
+model ChatOrder {
+  id       Int    @id @default(autoincrement()) @map("f_chat_order_id")
+  publicId String @unique @db.Char(21)
+
+  title       String             @map("f_title") @db.VarChar(100)
+  description String             @map("f_description") @db.Text
+  price       Int?               @map("f_price")
+  priceUnit   ChatOrderPriceUnit @default(W) @map("f_price_unit")
+  // 希望納期（任意）
+  deadline    DateTime?          @map("f_deadline")
+  status      ChatOrderStatus    @default(PENDING) @map("f_status")
+
+  // 依頼者（チャットでオーダーを送った側）
+  requesterUserId Int  @map("f_requester_user_id")
+  requesterUser   User @relation("ChatOrderRequester", fields: [requesterUserId], references: [id])
+
+  // 受注者（チャットの相手）
+  targetUserId Int  @map("f_target_user_id")
+  targetUser   User @relation("ChatOrderTarget", fields: [targetUserId], references: [id])
+
+  // このオーダーを表すチャットメッセージ（1:1）
+  chatMessageId Int         @unique @map("f_message_id")
+  chatMessage   ChatMessage @relation(fields: [chatMessageId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("f_created_at")
+  updatedAt DateTime @updatedAt @map("f_updated_at")
+
+  @@index([requesterUserId])
+  @@index([targetUserId])
+  @@map("chat_orders")
+}
+
+model CheckoutSession {
+  id              Int            @id @default(autoincrement()) @map("f_checkout_id")
+  stripeSessionId String?        @unique @map("f_stripe_session_id")
+  status          CheckoutStatus @default(CREATED) @map("f_status")
+  mode            SalesFormat    @map("f_mode")
+  createdAt       DateTime       @default(now()) @map("f_created_at")
+  updatedAt       DateTime       @updatedAt @map("f_updated_at")
+
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items CheckoutItem[]
+
+  @@index([userId])
+  @@map("checkout_sessions")
+}
+
+model CheckoutItem {
+  id          Int  @id @default(autoincrement()) @map("f_checkout_item_id")
+  checkoutId  Int  @map("f_checkout_id")
+  appId       Int  @map("f_app_id")
+  salesPlanId Int  @map("f_sales_plan_id")
+  cartItemId  Int? @map("f_cart_item_id")
+
+  checkout  CheckoutSession @relation(fields: [checkoutId], references: [id], onDelete: Cascade)
+  app       App             @relation(fields: [appId], references: [id], onDelete: Cascade)
+  salesPlan AppSalesPlan    @relation(fields: [salesPlanId], references: [id], onDelete: Cascade)
+  cartItem  CartItem?       @relation(fields: [cartItemId], references: [id], onDelete: SetNull)
+
+  @@index([checkoutId])
+  @@map("checkout_items")
+}
+
+model CoinTransaction {
+  id        Int      @id @default(autoincrement()) @map("f_transaction_id")
+  amount    Int      @map("f_amount")
+  createdAt DateTime @default(now()) @map("f_created_at")
+  memo      String?  @map("f_memo") @db.Text
+
+  receiverUserId Int  @map("f_receiver_user_id")
+  receiverUser   User @relation("ReceiverTransactions", fields: [receiverUserId], references: [id], onDelete: Cascade)
+
+  senderUserId Int?  @map("f_sender_user_id")
+  senderUser   User? @relation("SenderTransactions", fields: [senderUserId], references: [id], onDelete: SetNull)
+
+  @@index([receiverUserId])
+  @@index([senderUserId])
+  @@map("coin_transactions")
+}
+
+// ============================================
+// Bewts（ビューズ）機能
+// 複数ユーザーでの共同出品プロジェクト管理
+// ============================================
+
+// ビューズプロジェクト
+model BewtsProject {
+  id           Int                @id @default(autoincrement()) @map("f_bewts_project_id")
+  publicId     String             @unique @db.Char(21)
+  name         String             @map("f_project_name") @db.VarChar(100)
+  description  String             @map("f_description") @db.Text
+  maxMembers   Int                @map("f_max_members") // 募集人数
+  durationDays Int?               @map("f_duration_days") // 開発期間（日数）
+  status       BewtsProjectStatus @default(RECRUITING) @map("f_status")
+  startedAt    DateTime?          @map("f_started_at")
+  createdAt    DateTime           @default(now()) @map("f_created_at")
+  updatedAt    DateTime           @updatedAt @map("f_updated_at")
+
+  leaderId Int  @map("f_leader_id")
+  leader   User @relation("BewtsProjectLeader", fields: [leaderId], references: [id])
+
+  roles                       BewtsRole[]
+  skills                      BewtsSkill[]
+  rooms                       BewtsRoom[]
+  permissions                 BewtsPermission[]
+  joinRequests                BewtsJoinRequest[]
+  notifications               Notification[]
+  bewtsPermissionCapabilities BewtsPermissionCapability[]
+
+  // このビューズプロジェクトから共同出品されたアプリ
+  apps App[]
+
+  @@index([leaderId])
+  @@map("bewts_projects")
+}
+
+// ビューズ役割（リーダー含め最大10個）
+model BewtsRole {
+  id         Int     @id @default(autoincrement()) @map("f_bewts_role_id")
+  name       String  @map("f_role_name") @db.VarChar(50)
+  percentage Int     @map("f_profit_percentage") // 利益配分（%）
+  isLeader   Boolean @default(false) @map("f_is_leader")
+
+  projectId Int          @map("f_bewts_project_id")
+  project   BewtsProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  room BewtsRoom? // この役割専用のルーム
+
+  // join-requests that referenced this role (applicant's wish / approver assignment)
+  joinRequests     BewtsJoinRequest[]
+  joinRequestRoles BewtsJoinRequestRole[]
+
+  @@index([projectId])
+  @@map("bewts_roles")
+}
+
+// ビューズスキル（中間テーブル）
+model BewtsSkill {
+  id Int @id @default(autoincrement())
+
+  projectId Int          @map("f_bewts_project_id")
+  project   BewtsProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  skillId Int   @map("f_skill_id")
+  skill   Skill @relation(fields: [skillId], references: [id])
+
+  @@unique([projectId, skillId])
+  @@index([skillId])
+  @@map("bewts_skills")
+}
+
+// ビューズルーム（全員用 or 役割ごと）
+model BewtsRoom {
+  id        Int      @id @default(autoincrement()) @map("f_bewts_room_id")
+  name      String   @map("f_room_name") @db.VarChar(50)
+  isAllRoom Boolean  @default(false) @map("f_is_all_room") // 全員用ルームかどうか
+  createdAt DateTime @default(now()) @map("f_created_at")
+
+  projectId Int          @map("f_bewts_project_id")
+  project   BewtsProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  roleId Int?       @unique @map("f_bewts_role_id") // 役割専用ルームの場合
+  role   BewtsRole? @relation(fields: [roleId], references: [id])
+
+  members    BewtsRoomMember[]
+  messages   BewtsMessage[]
+  ganttChart BewtsGanttChart?
+  memo       BewtsMemo?
+
+  @@index([projectId])
+  @@map("bewts_rooms")
+}
+
+// ビューズルームメンバー
+model BewtsRoomMember {
+  id       Int      @id @default(autoincrement())
+  joinedAt DateTime @default(now()) @map("f_joined_at")
+
+  roomId Int       @map("f_bewts_room_id")
+  room   BewtsRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id])
+
+  @@unique([roomId, userId])
+  @@index([userId])
+  @@map("bewts_room_members")
+}
+
+// ビューズメッセージ
+model BewtsMessage {
+  id        Int      @id @default(autoincrement()) @map("f_bewts_message_id")
+  publicId  String   @unique @db.Char(21)
+  content   String   @map("f_content") @db.Text
+  createdAt DateTime @default(now()) @map("f_created_at")
+  updatedAt DateTime @updatedAt @map("f_updated_at")
+
+  roomId Int       @map("f_bewts_room_id")
+  room   BewtsRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  senderId Int  @map("f_sender_id")
+  sender   User @relation(fields: [senderId], references: [id])
+
+  attachments BewtsMessageAttachment[]
+  reactions   BewtsMessageReaction[]
+  reads       BewtsMessageRead[]
+
+  @@index([roomId, createdAt])
+  @@index([senderId])
+  @@map("bewts_messages")
+}
+
+// ビューズメッセージ添付ファイル
+model BewtsMessageAttachment {
+  id            Int    @id @default(autoincrement())
+  fileUrl       String @map("f_file_url") @db.Text
+  fileName      String @map("f_file_name") @db.VarChar(255)
+  fileType      String @map("f_file_type") @db.VarChar(100)
+  fileSizeBytes Int?   @map("f_file_size_bytes")
+  displayOrder  Int    @map("f_display_order")
+
+  messageId Int          @map("f_bewts_message_id")
+  message   BewtsMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@index([messageId])
+  @@map("bewts_message_attachments")
+}
+
+// ビューズメッセージリアクション
+model BewtsMessageReaction {
+  id        Int      @id @default(autoincrement())
+  emoji     String   @map("f_emoji") @db.VarChar(10)
+  createdAt DateTime @default(now()) @map("f_created_at")
+
+  messageId Int          @map("f_bewts_message_id")
+  message   BewtsMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id])
+
+  @@unique([messageId, userId, emoji])
+  @@index([messageId])
+  @@index([userId])
+  @@map("bewts_message_reactions")
+}
+
+// ビューズメッセージ既読
+model BewtsMessageRead {
+  id     Int      @id @default(autoincrement())
+  readAt DateTime @default(now()) @map("f_read_at")
+
+  messageId Int          @map("f_bewts_message_id")
+  message   BewtsMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id])
+
+  @@unique([messageId, userId])
+  @@index([messageId])
+  @@index([userId])
+  @@map("bewts_message_reads")
+}
+
+// ビューズ権限レベル
+enum BewtsPermissionLevel {
+  MEMBER // 基本権限（全メンバー）
+  PUBLISHER // ビューズ権限（共同出品の編集・削除）
+  ADMIN // 管理者権限（全役割チャット閲覧、権限付与）
+}
+
+// プロジェクトの状態
+enum BewtsProjectStatus {
+  RECRUITING
+  DEVELOPING
+  COMPLETED
+}
+
+// ビューズ権限
+model BewtsPermission {
+  id    Int                  @id @default(autoincrement())
+  level BewtsPermissionLevel @map("f_permission_level")
+
+  projectId Int          @map("f_bewts_project_id")
+  project   BewtsProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id])
+
+  @@unique([projectId, userId])
+  @@index([projectId])
+  @@index([userId])
+  @@map("bewts_permissions")
+}
+
+// ビューズ権限（詳細・ケイパビリティ） - 将来の細粒度 permission チェック用に正規化
+enum BewtsCapability {
+  // プロジェクト管理系
+  ADMIN // フル管理（全てのケイパビリティを含意することを想定）
+  PUBLISH // 共同出品の編集／公開相当の権限
+  SCOUT // スカウト権限
+  MANAGE_APP // ビューズしたアプリの編集・削除権限
+  MANAGE_PROJECT // プロジェクトの編集・削除権限
+  GRANT_PERMISSION // 権限付与権限
+
+  // メンバー管理 / 参加申請フロー
+  APPROVE_JOIN_REQUEST // 参加申請の承認
+  DECLINE_JOIN_REQUEST // 参加申請の見送り／拒否
+  UNDO_JOIN_APPROVAL // 承認取り消し（1分ルールの操作）
+  INVITE_MEMBER // メンバー招待や招待権限
+
+  // 役割・役割管理
+  ASSIGN_ROLE // 役割の割当／変更
+  VIEW_ALL_ROLES // 役割ごとの全チャット閲覧等（ADMIN に近い閲覧権限）
+
+  // 補助的な操作（拡張用）
+  MANAGE_GANTT
+}
+
+model BewtsPermissionCapability {
+  id        Int          @id @default(autoincrement())
+  projectId Int          @map("f_bewts_project_id")
+  project   BewtsProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id])
+
+  capability BewtsCapability @map("f_capability")
+
+  // 同一 project-user-capability の重複登録を防止
+  @@unique([projectId, userId, capability])
+  @@index([projectId])
+  @@index([userId])
+  @@map("bewts_permission_capabilities")
+}
+
+// ビューズガントチャート
+model BewtsGanttChart {
+  id        Int      @id @default(autoincrement()) @map("f_bewts_gantt_id")
+  createdAt DateTime @default(now()) @map("f_created_at")
+  updatedAt DateTime @updatedAt @map("f_updated_at")
+
+  roomId Int       @unique @map("f_bewts_room_id")
+  room   BewtsRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  tasks BewtsGanttTask[]
+
+  @@map("bewts_gantt_charts")
+}
+
+// ビューズガントチャートタスク
+model BewtsGanttTask {
+  id           Int     @id @default(autoincrement()) @map("f_task_id")
+  name         String  @map("f_task_name") @db.VarChar(100)
+  description  String? @map("f_description") @db.Text
+  progress     Int     @default(0) @map("f_progress")
+  status       String  @default("未着手") @map("f_status") @db.VarChar(20)
+  memo         String? @map("f_memo") @db.Text
+  color        String? @map("f_color") @db.VarChar(7) // #RRGGBB
+  displayOrder Int     @map("f_display_order")
+
+  chartId Int             @map("f_bewts_gantt_id")
+  chart   BewtsGanttChart @relation(fields: [chartId], references: [id], onDelete: Cascade)
+
+  assigneeId Int?  @map("f_assignee_id")
+  assignee   User? @relation(fields: [assigneeId], references: [id])
+
+  segments BewtsGanttTaskSegment[]
+
+  assignments BewtsGanttTaskAssignment[]
+
+  dependenciesFrom BewtsGanttTaskDependency[] @relation("FromTask")
+  dependenciesTo   BewtsGanttTaskDependency[] @relation("ToTask")
+
+  @@index([chartId])
+  @@map("bewts_gantt_tasks")
+}
+
+// ビューズガントチャートタスク担当者
+model BewtsGanttTaskAssignment {
+  id Int @id @default(autoincrement())
+
+  taskId Int            @map("f_bewts_task_id")
+  task   BewtsGanttTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  userId Int  @map("f_user_id")
+  user   User @relation("BewtsGanttTaskAssignmentToUser", fields: [userId], references: [id])
+
+  @@unique([taskId, userId])
+  @@index([userId])
+  @@map("bewts_gantt_task_assignments")
+}
+
+model BewtsGanttTaskSegment {
+  id      Int      @id @default(autoincrement()) @map("f_segment_id")
+  startAt DateTime @map("f_start_at")
+  endAt   DateTime @map("f_end_at")
+  color   String?  @map("f_color") @db.VarChar(7) // #RRGGBB
+  label   String?  @map("f_label") @db.VarChar(50)
+  note    String?  @map("f_note") @db.VarChar(255)
+  order   Int      @default(0) @map("f_order")
+
+  taskId Int            @map("f_bewts_task_id")
+  task   BewtsGanttTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+  @@map("bewts_gantt_task_segments")
+}
+
+model BewtsGanttTaskDependency {
+  id         Int @id @default(autoincrement())
+  fromTaskId Int
+  toTaskId   Int
+
+  fromTask BewtsGanttTask @relation("FromTask", fields: [fromTaskId], references: [id], onDelete: Cascade)
+  toTask   BewtsGanttTask @relation("ToTask", fields: [toTaskId], references: [id], onDelete: Cascade)
+
+  @@unique([fromTaskId, toTaskId])
+  @@map("bewts_gantt_task_dependencies")
+}
+
+// ビューズメモ（yjs用）
+model BewtsMemo {
+  id        Int      @id @default(autoincrement()) @map("f_bewts_memo_id")
+  yjsDoc    Bytes    @map("f_yjs_doc") // yjsのドキュメントバイナリ
+  createdAt DateTime @default(now()) @map("f_created_at")
+  updatedAt DateTime @updatedAt @map("f_updated_at")
+
+  roomId Int       @unique @map("f_bewts_room_id")
+  room   BewtsRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@map("bewts_memos")
+}
+
+// ビューズ参加申請ステータス
+enum BewtsJoinRequestStatus {
+  PENDING // 承認待ち
+  APPROVED // 承認済み
+  DECLINED // 辞退
+}
+
+// ビューズ参加申請
+model BewtsJoinRequest {
+  id        Int                    @id @default(autoincrement()) @map("f_request_id")
+  message   String?                @map("f_message") @db.Text
+  status    BewtsJoinRequestStatus @default(PENDING) @map("f_status")
+  createdAt DateTime               @default(now()) @map("f_created_at")
+  updatedAt DateTime               @updatedAt @map("f_updated_at")
+
+  projectId Int          @map("f_bewts_project_id")
+  project   BewtsProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id])
+
+  // optional: applicant's requested role (or approver-chosen role stored here)
+  roleId Int?       @map("f_bewts_role_id")
+  role   BewtsRole? @relation(fields: [roleId], references: [id])
+
+  // multi-role support (applicant request / approver final assignment)
+  roleAssignments       BewtsJoinRequestRole[]
+  capabilityAssignments BewtsJoinRequestCapability[]
+
+  notifications Notification[]
+
+  @@unique([projectId, userId])
+  @@index([projectId])
+  @@index([userId])
+  @@map("bewts_join_requests")
+}
+
+model BewtsJoinRequestCapability {
+  id Int @id @default(autoincrement())
+
+  joinRequestId Int              @map("f_join_request_id")
+  joinRequest   BewtsJoinRequest @relation(fields: [joinRequestId], references: [id], onDelete: Cascade)
+
+  capability BewtsCapability @map("f_capability")
+
+  @@unique([joinRequestId, capability])
+  @@index([capability])
+  @@map("bewts_join_request_capabilities")
+}
+
+model BewtsJoinRequestRole {
+  id Int @id @default(autoincrement())
+
+  joinRequestId Int              @map("f_join_request_id")
+  joinRequest   BewtsJoinRequest @relation(fields: [joinRequestId], references: [id], onDelete: Cascade)
+
+  roleId Int       @map("f_bewts_role_id")
+  role   BewtsRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([joinRequestId, roleId])
+  @@index([roleId])
+  @@map("bewts_join_request_roles")
+}
+
+// 通知タイプ
+enum NotificationType {
+  FOLLOW // フォロー
+  BEWT // ビュート
+  PURCHASE // 購入
+  CHAT // チャット
+  SCOUT // スカウト
+  ORDER // オーダー
+  BEWTS_JOIN_REQUEST // Bewts参加申請
+  BEWTS_JOIN_APPROVED // Bewts参加承認
+  BEWTS_JOIN_DECLINED // Bewts参加辞退
+  SYSTEM // システム通知
+}
+
+// 通知
+model Notification {
+  id          Int              @id @default(autoincrement()) @map("f_notification_id")
+  type        NotificationType @map("f_type")
+  title       String           @map("f_title") @db.VarChar(200)
+  message     String?          @map("f_message") @db.Text
+  redirectUrl String?          @map("f_redirect_url") @db.Text
+  isRead      Boolean          @default(false) @map("f_is_read")
+  readAt      DateTime?        @map("f_read_at")
+  createdAt   DateTime         @default(now()) @map("f_created_at")
+
+  // 通知を受け取るユーザー
+  userId Int  @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 通知の発信元ユーザー（フォロー、チャット等の場合）
+  actorId Int?  @map("f_actor_id")
+  actor   User? @relation("NotificationActor", fields: [actorId], references: [id], onDelete: SetNull)
+
+  // 関連リソースへの参照
+  appId            Int?              @map("f_app_id")
+  app              App?              @relation(fields: [appId], references: [id], onDelete: Cascade)
+  chatRoomId       Int?              @map("f_chat_room_id")
+  chatRoom         ChatRoom?         @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  bewtsProjectId   Int?              @map("f_bewts_project_id")
+  bewtsProject     BewtsProject?     @relation(fields: [bewtsProjectId], references: [id], onDelete: Cascade)
+  bewtsJoinRequest BewtsJoinRequest? @relation(fields: [joinRequestId], references: [id], onDelete: Cascade)
+  joinRequestId    Int?              @map("f_join_request_id")
+
+  @@index([userId, createdAt])
+  @@index([actorId])
+  @@map("notifications")
+}
+
+// 通知設定
+model NotificationSetting {
+  id Int @id @default(autoincrement())
+
+  userId Int  @unique @map("f_user_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 各通知タイプのON/OFF
+  followEnabled             Boolean @default(true) @map("f_follow_enabled")
+  bewtEnabled               Boolean @default(true) @map("f_bewt_enabled")
+  bewtsBewtEnabled          Boolean @default(true) @map("f_bewts_bewt_enabled")
+  purchaseEnabled           Boolean @default(true) @map("f_purchase_enabled")
+  chatEnabled               Boolean @default(true) @map("f_chat_enabled")
+  bewtsChatEnabled          Boolean @default(true) @map("f_bewts_chat_enabled")
+  orderEnabled              Boolean @default(true) @map("f_order_enabled")
+  scoutEnabled              Boolean @default(true) @map("f_scout_enabled")
+  bewtsJoinRequestEnabled   Boolean @default(true) @map("f_bewts_join_request_enabled")
+  bewtsJoinApprovedEnabled  Boolean @default(true) @map("f_bewts_join_approved_enabled")
+  bewtsJoinDeclinedEnabled  Boolean @default(true) @map("f_bewts_join_declined_enabled")
+  bewtsJoinFinalizedEnabled Boolean @default(true) @map("f_bewts_join_finalized_enabled")
+  bewtsJoinEnabled          Boolean @default(true) @map("f_bewts_join_enabled")
+  systemEnabled             Boolean @default(true) @map("f_system_enabled")
+
+  @@map("notification_settings")
+}

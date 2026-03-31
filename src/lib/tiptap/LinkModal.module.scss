@@ -1,0 +1,80 @@
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &:first-child {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.label {
+  display: inline-block;
+  align-self: flex-start;
+  color: #fff;
+}
+
+.input {
+  --gradient-angle: 135deg;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1.9px solid transparent;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  outline: none;
+  color: white;
+
+  &::placeholder {
+    color: #888;
+  }
+}
+
+
+.cancelBtn,
+.addLinkBtn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.cancelBtn {
+  color: #fff;
+}
+
+.cancelBtn:hover {
+  background: rgba(136, 136, 136, 0.3);
+}
+
+.addLinkBtn {
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%);
+  color: white;
+  font-weight: bold;
+}
+
+.addLinkBtn:disabled {
+  background: rgba(136, 136, 136, 0.2);
+  color: #666;
+  cursor: not-allowed;
+}
+
+.addLinkBtn:not(:disabled):hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,1750 @@
+// ============ ROOT ============
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #5a8a9f;
+  font-size: 14px;
+}
+
+.loadingSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+  margin-top: 1rem;
+  padding: 8px 8px 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.loadingSkeletonVisible {
+  opacity: 0.2;
+}
+
+.loadingSkeletonHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loadingSkeletonTopBar,
+.loadingSkeletonStatusBar,
+.loadingSkeletonHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loadingSkeletonTopBar {
+  padding: 0 8px;
+}
+
+.loadingSkeletonStatusBar {
+  padding: 0 8px;
+}
+
+.loadingSkeletonMain {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.loadingSkeletonHeader {
+  padding: 1rem 8px;
+  margin-bottom: 0.7rem;
+}
+
+.loadingSkeletonTable {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.loadingSkeletonTableRow {
+  display: grid;
+  grid-template-columns: 220px 120px 110px 140px minmax(460px, 1fr);
+  gap: 1rem;
+  align-items: center;
+}
+
+.loadingSkeletonTableRow {
+  padding: 0.5rem 8px;
+}
+
+.skeletonBlock {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #00ffff33;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-35deg,
+        #fff1 5%,
+        #fff0 15%,
+        #fff1 45%,
+        #fff2 60%,
+        #fff1 90%,
+        #fff0 100%);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-35deg,
+        #020713 0%,
+        rgba(0, 255, 255, 0.22) 20%,
+        rgba(0, 255, 255, 0.5) 38%,
+        rgba(0, 255, 255, 0.22) 60%,
+        #020713 100%);
+    transform: translateX(-100%);
+    animation: skeletonShimmer 1.4s ease-in-out infinite;
+  }
+}
+
+.skeletonLabel {
+  width: 56px;
+  height: 18px;
+}
+
+.skeletonTabs {
+  width: 360px;
+  height: 34px;
+  border-radius: 9999px;
+}
+
+.skeletonTabsWide {
+  width: 460px;
+  height: 34px;
+  border-radius: 9999px;
+}
+
+.skeletonButton {
+  margin-left: auto;
+  width: 110px;
+  height: 34px;
+  border-radius: 9999px;
+}
+
+.skeletonBadges {
+  width: 180px;
+  height: 26px;
+  border-radius: 9999px;
+}
+
+.skeletonTinyButton {
+  width: 32px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.skeletonDateRange {
+  width: 340px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.skeletonTodayButton {
+  width: 58px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.skeletonCheckbox {
+  width: 150px;
+  height: 24px;
+  margin-left: auto;
+  border-radius: 6px;
+}
+
+.skeletonCellTask,
+.skeletonCellAssignee {
+  height: 35px;
+}
+
+.skeletonCellProgress,
+.skeletonCellStatus {
+  height: 33px;
+}
+
+.skeletonCellTimeline {
+  height: 30px;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// ============ TOP BAR ============
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  flex-shrink: 0;
+}
+
+.topBarLabel {
+  width: 55px;
+  font-size: 12px;
+  color: #0ff;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.tabGroup {
+  display: flex;
+  gap: 3px;
+  position: relative;
+  padding: 0.25rem;
+  border-radius: 9999px;
+}
+
+.tabGroup::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 1.5px * 2);
+  height: calc(100% - 1.5px * 2);
+  background-color: #00091a;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.tabGroup::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right bottom,
+      var(--gradient-primary-colors));
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.tabBtn {
+  position: relative;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 20px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: all 0.2s;
+  font-family: inherit;
+  white-space: nowrap;
+  z-index: 1;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.tabBtnActive {
+  color: #fff;
+  font-weight: 400;
+}
+
+.tabbedIndicator {
+  position: absolute;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  border-radius: 9999px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 0;
+  transition: all 300ms ease;
+}
+
+// ============ STATUS BAR ============
+.statusBar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0.25rem 16px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.newTaskBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  text-align: center;
+  margin-left: auto;
+  padding: 0.45rem 1rem;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.statusBadges {
+  display: flex;
+  gap: 6px;
+}
+
+.badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badgeTodo {
+  background: #2a5a7a;
+  color: #6acfef;
+}
+
+.badgeWip {
+  background: #7a6a2a;
+  color: #efcf6a;
+}
+
+.badgeDone {
+  background: #2a7a4a;
+  color: #6aef9a;
+}
+
+.downloadBtn {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.downloadBtnIcon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+// ============ MAIN AREA ============
+.mainArea {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.contentArea {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.chartArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+// ============ CHART HEADER ============
+.chartHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: 0.7rem;
+  padding: 0.6rem 0.2rem;
+  flex-shrink: 0;
+}
+
+.navBtn {
+  background: none;
+  border: none;
+  color: #5a8a9f;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 8px;
+  transition: color 0.2s;
+  border-radius: 4px;
+
+  &:hover {
+    color: #0ff;
+  }
+}
+
+.dateDisplay {
+  background: #0e2a3a;
+  border: 1px solid #1a6080;
+  border-radius: 4px;
+  padding: 3px 12px;
+  font-size: 12px;
+  color: #c8eaf5;
+  white-space: nowrap;
+}
+
+.dateRangePicker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+.dateRangeSep {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #5a8a9f;
+  flex-shrink: 0;
+}
+
+.dateInput {
+  --gradient-angle: 135deg;
+  border: 1.9px solid transparent;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  padding: 3px 8px;
+  font-size: 11px;
+  outline: none;
+  color-scheme: dark;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #00d4ff;
+  }
+}
+
+.sortBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: 1.3px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(to right bottom, var(--gradient-form-colors)) border-box;
+  margin-left: 1.5rem;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.75rem;
+  color: #0ffd;
+  transition: all 0.3s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-35deg,
+        #fff1 5%,
+        #fff0 15%,
+        #fff2 25%,
+        #fff0 35%,
+        #fff1 45%,
+        #fff0 50%,
+        #fff2 60%,
+        #fff0 85%,
+        #fff1 90%,
+        #fff0 100%);
+    pointer-events: none;
+  }
+}
+
+.chartHeaderRight {
+  margin-left: auto;
+  margin-right: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.myTasksToggleItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #dbe9ff;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"]:checked+.myTasksCheckmark::before {
+    opacity: 0;
+  }
+
+  input[type="checkbox"]:checked+.myTasksCheckmark::after {
+    opacity: 1;
+  }
+}
+
+.myTasksCheckmark {
+  position: relative;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border-radius: 0.25rem;
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 0.2rem);
+    height: calc(100% - 0.2rem);
+    border-radius: 0.15rem;
+    background-color: #00091a;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.9rem;
+    height: 0.9rem;
+    background-image: url(/images/check.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+}
+
+// ============ GANTT CONTAINER ============
+.ganttContainer {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+  margin: 0 0.5rem;
+
+  -webkit-mask-image: linear-gradient(to right,
+      black calc(100% - 35px),
+      #000a calc(100% - 30px),
+      #0008 calc(100% - 20px),
+      transparent calc(100% - 5px));
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to right,
+      black calc(100% - 35px),
+      #000a calc(100% - 30px),
+      #0008 calc(100% - 20px),
+      transparent calc(100% - 5px));
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 7px;
+  }
+
+  &::-webkit-scrollbar-track:horizontal {
+    margin-right: 30px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom right, #00ffff, #0b8de3);
+    border-radius: 7px;
+    min-height: 70px;
+    transition: all 0.2s;
+
+    &:hover {
+      background: linear-gradient(to bottom right, #00ffffcc, #0b8de3cc);
+    }
+  }
+}
+
+.ganttTable {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  min-width: 100%;
+}
+
+// ============ HEADER ROW ============
+.ganttHeaderRow {
+  display: flex;
+  min-width: max-content;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-top: 1px solid #0e3a52;
+  border-bottom: 2px solid #1a6080;
+}
+
+.colTask {
+  width: 200px;
+  min-width: 200px;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #5a8a9f;
+  border-left: 1px solid #0e3a52;
+  border-right: 1px solid #0e3a52;
+  background: #00091A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  left: 0;
+  z-index: 21;
+}
+
+.colProgress {
+  width: 70px;
+  min-width: 70px;
+  padding: 8px 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #5a8a9f;
+  border-right: 1px solid #0e3a52;
+  background: #00091A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  left: 200px;
+  z-index: 21;
+}
+
+.colStatus {
+  width: 80px;
+  min-width: 80px;
+  padding: 8px 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #5a8a9f;
+  border-right: 1px solid #0e3a52;
+  background: #00091A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  left: 270px;
+  z-index: 21;
+}
+
+.colAssignee {
+  width: 120px;
+  min-width: 120px;
+  padding: 8px 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #5a8a9f;
+  border-right: 2px solid #0e3a52;
+  background: #00091A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  left: 350px;
+  z-index: 21;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -7px;
+    bottom: 0;
+    width: 5px;
+    background: linear-gradient(to right, #00091A 0%, transparent 100%);
+    pointer-events: none;
+  }
+}
+
+.headerTimeline {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.headerGroupRow {
+  position: relative;
+  height: 20px;
+  border-bottom: 1px solid #0e3a52;
+  flex-shrink: 0;
+}
+
+.headerGroup {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #5a8a9f;
+  border-left: 1px solid #1a6080;
+  padding: 0 4px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.headerGroupLabel {
+  position: sticky;
+}
+
+.headerUnitRow {
+  position: relative;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.headerUnit {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #2a5a6f;
+  border-left: 1px solid #0e3a52;
+  overflow: hidden;
+  user-select: none;
+}
+
+.headerUnitWeekend {
+  background: rgba(106, 207, 239, 0.06);
+  color: #4a8aaf;
+}
+
+.headerUnitGroupStart {
+  border-left-color: #1a6080;
+}
+
+// ============ TASK ROWS ============
+.ganttRow {
+  display: flex;
+  min-width: max-content;
+  flex-shrink: 0;
+  border-bottom: 1px solid #0e3a52;
+  cursor: pointer;
+  transition: all 0.25s;
+  background: #071220;
+
+  &:nth-child(even) {
+    background: #071a26;
+  }
+
+  &:hover:not(.ganttRowSelected) {
+    background: #0d2a3a;
+    transition: all 0.25s;
+
+    .cellTask,
+    .cellProgress,
+    .cellStatus,
+    .cellAssignee {
+      background: #0d2a3a !important;
+    }
+  }
+}
+
+.ganttRowSelected {
+  background: #0d252e !important;
+  overflow: visible;
+  box-shadow: 0 0 3px 2px #00ffffcc;
+  z-index: 999;
+
+  .cellTask,
+  .cellProgress,
+  .cellStatus,
+  .cellAssignee {
+    background: #0d252e !important;
+  }
+}
+
+.ganttRow:nth-child(even) {
+
+  .cellTask,
+  .cellProgress,
+  .cellStatus,
+  .cellAssignee {
+    background: #071a26;
+  }
+}
+
+// Left sticky cells in task rows
+.cellTask {
+  width: 200px;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-left: 1px solid #0e3a52;
+  border-right: 1px solid #0e3a52;
+  padding: 0 8px 0 6px;
+  overflow: hidden;
+  font-size: 13px;
+  position: sticky;
+  left: 0;
+  z-index: 12;
+  background: #071220;
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    word-break: normal;
+    line-break: anywhere;
+  }
+}
+
+.dragHandle {
+  margin-bottom: 0.2rem;
+  cursor: grab;
+  color: #2a5a6f;
+  flex-shrink: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0 2px;
+  letter-spacing: -1px;
+  user-select: none;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+    color: #5a8a9f;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.cellProgress {
+  width: 70px;
+  min-width: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #0e3a52;
+  padding: 0 8px;
+  position: sticky;
+  left: 200px;
+  z-index: 12;
+  background: #071220;
+
+  span {
+    font-size: 11px;
+    color: #00d4ff;
+  }
+}
+
+.miniProgressWrap {
+  width: 100%;
+  height: 3px;
+  background: #0e3a52;
+  border-radius: 2px;
+  margin-top: 3px;
+  overflow: hidden;
+}
+
+.miniProgressFill {
+  height: 100%;
+  background: #00d4ff;
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.cellStatus {
+  width: 80px;
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #0e3a52;
+  padding: 0 6px;
+  position: sticky;
+  left: 270px;
+  z-index: 12;
+  background: #071220;
+}
+
+.statusBadge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.cellAssignee {
+  width: 120px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  border-right: 2px solid #0e3a52;
+  padding: 0 8px;
+  overflow: hidden;
+  position: sticky;
+  left: 350px;
+  z-index: 12;
+  background: #071220;
+  overflow: visible;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -7px;
+    bottom: -1px;
+    width: 5px;
+    background: linear-gradient(to right, #00091A55 0%, transparent 100%);
+    pointer-events: none;
+  }
+}
+
+.avatarSmall {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #00d4ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #000;
+  flex-shrink: 0;
+}
+
+.assigneeName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+  color: #5a8a9f;
+}
+
+// ============ TIMELINE CELLS ============
+.cellTimeline {
+  flex: 1;
+  position: relative;
+}
+
+.timelineCell {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid #0e3a52;
+}
+
+.timelineCellGroupStart {
+  border-left-color: #1a6080;
+}
+
+.timelineCellWeekend {
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.todayMarker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ff6a00;
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 5;
+}
+
+// ============ GANTT BARS ============
+.ganttBar {
+  position: absolute;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  z-index: 3;
+  transition: filter 0.15s;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.barLabel {
+  font-size: 8px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 0.3rem 0 0.5rem;
+  pointer-events: none;
+  flex: 1;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: anywhere;
+}
+
+.resizeHandleLeft {
+  position: absolute;
+  left: -4px;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  cursor: ew-resize;
+  z-index: 4;
+}
+
+.resizeHandleRight {
+  position: absolute;
+  right: -4px;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  cursor: ew-resize;
+  z-index: 4;
+}
+
+// ============ EMPTY STATE ============
+.emptyState {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #2a5a6f;
+  font-size: 13px;
+  text-align: center;
+}
+
+// ============ DETAIL PANEL ============
+.detailPanel {
+  width: 390px;
+  min-width: 390px;
+  max-width: 390px;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #00091a 0%, #071220 100%) padding-box,
+    linear-gradient(135deg, var(--gradient-primary-colors)) border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: 0 0 10px 3px #0008;
+  z-index: 9999;
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.detailPanelEntering {
+  animation: panelSlideIn 0.25s ease forwards;
+}
+
+.detailPanelExiting {
+  animation: panelSlideOut 0.25s ease forwards;
+}
+
+@keyframes panelSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes panelSlideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.1rem 0.2rem 1.1rem;
+  flex-shrink: 0;
+}
+
+.panelTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.panelClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 2px 6px;
+  transition: color 0.2s;
+  border-radius: 4px;
+
+  &:hover {
+    color: #00d4ff;
+  }
+}
+
+.detailTabArea {
+  flex: 1;
+}
+
+.detailTabTop {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.detailTabbed {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  padding: 0.42rem;
+  border-radius: 9999px;
+}
+
+.detailTabbed::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 1.5px * 2);
+  height: calc(100% - 1.5px * 2);
+  background-color: #00091a;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+.detailTabbed::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.detailTabbedIndicator {
+  position: absolute;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  border-radius: 25px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+  transition: all 300ms ease;
+}
+
+.detailTabBtn {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0.45rem 1.1rem;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  color: #fff;
+  z-index: 2;
+  font-size: 0.75rem;
+}
+
+.activeDetailTab {
+  color: #fff;
+}
+
+.panelBody {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.detailTabContainer {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex: 1;
+  transition: transform 0.4s ease;
+}
+
+.detailTabContent {
+  flex: 0 0 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  height: 100%;
+  padding: 1.5rem 1.7rem 1.2rem 1.7rem;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease, transform 0.4s ease;
+
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 1px,
+      #0008 9px,
+      black 20px,
+      black calc(100% - 20px),
+      #0008 calc(100% - 9px),
+      transparent calc(100% - 1px));
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to bottom,
+      transparent 1px,
+      #0008 9px,
+      black 20px,
+      black calc(100% - 20px),
+      #0008 calc(100% - 9px),
+      transparent calc(100% - 1px));
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.detailTabContentActive {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.panelField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.barColorSwatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+}
+
+.barColorButton {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  outline: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.barColorButtonSelected {
+  outline: 2px solid #0ff;
+}
+
+.barColorResetButton {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #222;
+  border: 1.5px solid #555;
+  outline: none;
+  cursor: pointer;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.barColorResetButtonActive {
+  outline: 2px solid #0ff;
+}
+
+.barColorSelectedValue {}
+
+.panelLabel {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #0ff;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.panelInput {
+  --gradient-angle: 135deg;
+  width: auto;
+  height: fit-content;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-size: 0.75rem;
+  border: 1.9px solid transparent;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  outline: none;
+  color: white;
+
+  &::placeholder {
+    color: #888;
+  }
+}
+
+.panelTextarea {
+  --gradient-angle: 135deg;
+  width: auto;
+  height: fit-content;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-size: 0.75rem;
+  border: 1.9px solid transparent;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  resize: vertical;
+  outline: none;
+  color: white;
+
+  &::placeholder {
+    color: #888;
+  }
+}
+
+.panelRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.statusChipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.1rem;
+}
+
+.statusChipButton {
+  position: relative;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, var(--gradient-primary-colors));
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0.35rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  overflow: hidden;
+  border: none;
+  transition: color 0.15s ease, transform 0.1s ease;
+}
+
+.statusChipButton::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 0.15rem);
+  height: calc(100% - 0.15rem);
+  border-radius: inherit;
+  background-color: #00091a;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.statusChipButtonActive {
+  color: #fff;
+}
+
+.statusChipButtonActive::before {
+  opacity: 0;
+}
+
+.statusChipButton span {
+  position: relative;
+  z-index: 1;
+}
+
+.progressInput {
+  width: calc(100% - 0.4rem);
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  margin: 0.6rem 0.2rem;
+  border-radius: 999px;
+  background:
+    linear-gradient(to right,
+      #00ffff 0%,
+      #14c8ee calc(var(--progress, 0) * 1% / 2),
+      #0b8de3 calc(var(--progress, 0) * 1% / 1.17),
+      #0251d8 calc(var(--progress, 0) * 1%),
+      #0e3a52 calc(var(--progress, 0) * 1%),
+      #0e3a52 100%);
+  outline: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.progressInput::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.progressInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #0ff;
+  box-shadow: 0 0 6px rgba(0, 212, 255, 0.9);
+  margin-top: -4px;
+}
+
+.progressInput::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.progressInput::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #00d4ff;
+  border: 2px solid #00101f;
+  box-shadow: 0 0 6px rgba(0, 212, 255, 0.9);
+}
+
+// ============ PERIOD ITEMS ============
+.periodItem {
+  position: relative;
+  --gradient-angle: 135deg;
+  padding: 1rem 1.2rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #6665 0%,
+      #8888 25%,
+      #fff8 50%,
+      #8888 75%,
+      #6665 100%) border-box;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-25deg,
+        #f0f8fd03 12%,
+        #dcf4fc21 21%,
+        #caeefb33 27%,
+        #d9f3fc00 38%,
+        #edf9fe03 51%,
+        #f8fdff33 58%,
+        #caeefb03 65%,
+        #ffffff03 75%,
+        #ffffff00 84%,
+        #ffffff22 100%);
+    pointer-events: none;
+  }
+}
+
+.periodItemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.periodBadge {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.15rem 0.8rem;
+  border: 1.3px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(to right bottom, var(--gradient-form-colors)) border-box;
+  font-size: 0.65rem;
+  color: #0ffd;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(-35deg,
+        #fff1 5%,
+        #fff0 15%,
+        #fff2 25%,
+        #fff0 35%,
+        #fff1 45%,
+        #fff0 50%,
+        #fff2 60%,
+        #fff0 85%,
+        #fff1 90%,
+        #fff0 100%);
+    pointer-events: none;
+  }
+}
+
+.periodRemove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 2px 5px;
+  border-radius: 3px;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.6;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0;
+  }
+}
+
+.periodFields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pf {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.pfLabel {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #0ff;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pfInput {
+  --gradient-angle: 135deg;
+  width: 100%;
+  height: fit-content;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-size: 0.75rem;
+  border: 1.9px solid transparent;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  outline: none;
+  color: white;
+  z-index: 999;
+
+  &::placeholder {
+    color: #888;
+  }
+}
+
+.dateInputs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pfInputDate {
+  font-family: inherit;
+  font-size: 10px;
+  // Webkit datetime-local appearance
+  color-scheme: dark;
+}
+
+.addPeriodBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+  padding: 0.4rem 1.3rem 0.4rem 1rem;
+  text-align: center;
+  border-radius: 9999px;
+  border: none;
+  background: linear-gradient(to right bottom, #00ffff, #0ea5e9, #2563eb);
+  color: #ecfeff;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// ============ PANEL ACTIONS ============
+.panelActions {
+  padding: 0.2rem 1rem 0.7rem 1rem;
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btnSave {
+  margin-left: auto;
+  padding: 0.5rem 1.5rem;
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  color: #fff;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.02);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btnDelete {
+  padding: 8px 14px;
+  background: #f00;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #5a2a2a;
+  }
+}

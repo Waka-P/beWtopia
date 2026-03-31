@@ -1,0 +1,70 @@
+.toggleCont {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+
+  &>label {
+    user-select: none;
+    cursor: pointer;
+  }
+}
+
+.toggleInput {
+  display: none;
+}
+
+.toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  aspect-ratio: 55 / 28;
+  width: 45px;
+  height: auto;
+  border-radius: 9999px;
+  cursor: pointer;
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 0.2rem);
+    height: calc(100% - 0.2rem);
+    border-radius: 9999px;
+    background-color: #00091a;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .knob {
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    background: #fff;
+    border-radius: 50%;
+    top: 50%;
+    left: 3px;
+    box-shadow: 1px 1px 1.5px #00091a55;
+    transform: translateY(-50%);
+    transition: left 0.3s;
+  }
+}
+
+.toggleInput:checked+.toggle {
+  &::before {
+    opacity: 0;
+  }
+
+  .knob {
+    left: calc(100% - 21px);
+  }
+}

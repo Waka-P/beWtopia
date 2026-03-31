@@ -1,0 +1,151 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ── フィールドグループ ─────────────── */
+.formGroup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 2rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.label {
+  display: inline-block;
+  align-self: flex-start;
+  color: #0ff;
+  margin-bottom: 0.4rem;
+}
+
+/* ── 星評価 ────────────────────────── */
+.stars {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.starBtn {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  font-size: 36px;
+  line-height: 1;
+  transition: transform 0.12s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(1.02);
+  }
+}
+
+/* 状態ごとの色 — クラスはReact側から付与 */
+.starIdle {
+  color: #666;
+}
+
+.starSelected {
+  color: #0ff;
+}
+
+.starHover {
+  color: #0ffe;
+}
+
+.ratingLabel {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* ── テキストエリア ────────────────── */
+.textarea {
+  --gradient-angle: 135deg;
+  resize: none;
+  width: 100%;
+  height: 200px;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1.9px solid transparent;
+  outline: none;
+  color: white;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  border-radius: 0.25rem;
+  outline: none;
+
+  &::placeholder {
+    color: #888;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── エラー ────────────────────────── */
+.error {
+  font-size: 13px;
+  color: #ef4444;
+  margin: 0;
+}
+
+/* ── ボタン群 ─────────────────────── */
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.submitBtn {
+  padding: 12px 23px;
+  text-align: center;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 50%,
+      #0b8de3 85%,
+      #0251d8 100%);
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.25s ease;
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &:not(.disabled):hover {
+    transform: scale(1.03);
+  }
+
+  &:not(.disabled):active {
+    transform: scale(1.01);
+  }
+}

@@ -1,0 +1,303 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: -1.5rem -3rem -1.5rem -3rem;
+}
+
+.topbar {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  --gradient-angle: 135deg;
+  position: relative;
+  border-bottom: 1.9px solid transparent;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #6665 0%,
+      #8888 25%,
+      #fff8 50%,
+      #8888 75%,
+      #6665 100%) border-box;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-25deg,
+        #f0f8fd03 12%,
+        #dcf4fc21 21%,
+        #caeefb33 27%,
+        #d9f3fc00 38%,
+        #edf9fe03 51%,
+        #f8fdff33 58%,
+        #caeefb03 65%,
+        #ffffff03 75%,
+        #ffffff00 84%,
+        #ffffff22 100%);
+    pointer-events: none;
+  }
+}
+
+.topbarLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.projectTitle {
+  display: block;
+  max-width: min(60vw, 560px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+.marqueeText {
+  display: inline;
+}
+
+.marqueeReady:hover {
+  text-overflow: clip;
+}
+
+.marqueeReady:hover .marqueeText {
+  display: inline-block;
+  padding-right: 1.2rem;
+  animation: projectTitleMarquee 6s linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes projectTitleMarquee {
+
+  0%,
+  12% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  89% {
+    opacity: 1;
+    transform: translateX(calc(-1 * var(--marquee-distance, 0px)));
+  }
+
+  93% {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--marquee-distance, 0px)));
+  }
+
+  94% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  98%,
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.projectMeta {
+  margin-left: 0.2rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #00e5ff;
+}
+
+.searchWrapper {
+  display: flex;
+  align-items: center;
+  width: 40%;
+  border: 2px solid transparent;
+}
+
+.searchIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 2px solid #00e5ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00e5ff;
+}
+
+.searchIconGlyph {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.mainLayout {
+  display: flex;
+  flex: 1;
+  height: calc(100% - 80px);
+}
+
+.sidebar {
+  position: relative;
+  width: 300px;
+  min-width: 250px;
+  max-width: 600px;
+  padding: 2rem 1rem 2rem 3rem;
+  border-right: 1px solid #1e3a5f;
+  overflow: visible;
+
+  &[data-width='0'] {
+    min-width: 0;
+    width: 0;
+    padding: 0;
+    border-right: none;
+
+    .channelList,
+    .rolesSectionLabel,
+    .chatNavIndicator {
+      display: none;
+    }
+  }
+}
+
+.resizer {
+  width: 10px;
+  background: transparent;
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform: translateX(50%);
+  z-index: 10;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover,
+  &.active {
+    background: #00d4ff11;
+  }
+
+  &.collapsed {}
+}
+
+.handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.5rem;
+  width: 10px;
+  border-radius: 9999px;
+  background-color: #00d4ff;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+
+  .resizer:hover &,
+  .resizer.active &,
+  .resizer.collapsed & {
+    opacity: 1;
+  }
+}
+
+.channelList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.channelItem {
+  position: relative;
+  padding: 6px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.channelItemActive {
+  color: #00e5ff;
+  cursor: pointer;
+}
+
+.channelButton {
+  all: unset;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.channelName {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+
+.rolesSectionLabel {
+  margin: 16px 0 6px;
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+.chatNavItem {
+  position: relative;
+}
+
+.chatNavIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, #00e5ff, #00b0ff);
+  border-radius: 9999px;
+  /* allow smooth movement when transform or height changes */
+  will-change: transform, height;
+}
+
+.enableTransition {
+  transition: transform 0.25s ease,
+    height 0.25s ease;
+}
+
+.chatAreaContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary);
+}
+
+.emptyState {
+  color: var(--text-muted);
+  padding: 24px;
+}

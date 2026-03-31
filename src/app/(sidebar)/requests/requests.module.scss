@@ -1,0 +1,129 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(0, 255, 255, 0.2);
+}
+
+.left h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #00ffff;
+}
+
+.right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.newButton {
+  position: fixed;
+  bottom: 5rem;
+  right: 5rem;
+  padding: 1rem;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: linear-gradient(#00091A, #00091A) padding-box,
+    linear-gradient(to right bottom, var(--gradient-primary-colors)) border-box;
+  box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.8);
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+
+.newButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(to right bottom,
+      #F0F8FD03 12%,
+      #DCF4FC21 21%,
+      #CAEEFB33 27%,
+      #D9F3FC00 38%,
+      #EDF9FE03 51%,
+      #F8FDFF33 58%,
+      #CAEEFB03 65%,
+      #FFFFFF03 75%,
+      #FFFFFF00 84%,
+      #FFFFFF22 100%);
+}
+
+.newButton img {
+  width: 35px;
+  height: auto;
+}
+
+.newButton:hover {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1.5px solid rgba(0, 255, 255, 0.3);
+  border-radius: 25px;
+  width: 300px;
+
+  input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 1rem;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    
+    img {
+      width: 20px;
+      height: 20px;
+      opacity: 0.7;
+    }
+  }
+}
+
+.sortButton {
+  padding: 0.5rem 1rem;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1.5px solid rgba(0, 255, 255, 0.3);
+  border-radius: 25px;
+  color: #00ffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(0, 255, 255, 0.2);
+    border-color: rgba(0, 255, 255, 0.5);
+  }
+}

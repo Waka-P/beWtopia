@@ -1,0 +1,107 @@
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #0ff;
+  margin-bottom: 2rem;
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.appInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.appLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.appIconWrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.appIcon {
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+.appName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  max-width: 350px;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-break: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.marqueeText {
+  display: inline;
+}
+
+.marqueeReady:hover {
+  text-overflow: clip;
+}
+
+.marqueeReady:hover .marqueeText {
+  display: inline-block;
+  padding-right: 1.2rem;
+  animation: appNameMarquee 6s linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes appNameMarquee {
+
+  0%,
+  12% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  89% {
+    opacity: 1;
+    transform: translateX(calc(-1 * var(--marquee-distance, 0px)));
+  }
+
+  93% {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--marquee-distance, 0px)));
+  }
+
+  94% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  98%,
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.ratingSummary {
+  width: 400px;
+}

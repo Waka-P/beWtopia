@@ -1,0 +1,564 @@
+.users {
+  container-type: inline-size;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &.fade {
+    opacity: 0;
+    transform: scale(0.97);
+    pointer-events: none;
+
+    .actionMenuBtn {
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+  }
+
+  &.listView {
+    .usersCont {
+      gap: 3.5rem;
+      align-content: flex-start;
+    }
+
+    .user {
+      width: 90%;
+      max-width: 100%;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .userInner {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .userHeader {
+      flex: 1 1 auto;
+      min-width: 0;
+      margin-right: 2rem;
+    }
+
+    .nameRatingCont {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1.5rem;
+      min-width: 0;
+      max-width: 19rem;
+      width: fit-content;
+    }
+
+    .userName {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .rating {
+      flex: 0 0 auto;
+      min-width: max-content;
+    }
+
+    .userDescList {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 0.9rem;
+      color: #ccc;
+      max-height: 1.2em;
+      line-height: 1.2em;
+    }
+
+    .userDescGrid {
+      display: none;
+    }
+
+    .userApps {
+      display: grid;
+      grid-template-columns: repeat(4, 3.25rem);
+      flex: 0 0 auto;
+      gap: 1rem;
+      margin-right: 2rem;
+    }
+
+    .userApp {
+      flex: 0 0 3.25rem;
+      width: 3.25rem;
+      height: 3.25rem;
+    }
+
+    .userApps:has(.noApps) {
+      visibility: hidden;
+    }
+
+    .actionMenuBtn {
+      position: static;
+      top: auto;
+      right: auto;
+      margin-left: auto;
+      height: 1.25rem;
+    }
+  }
+
+  &.gridView {
+    .usersCont {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 2rem;
+    }
+
+    .user {
+      gap: 0.4rem;
+      margin: 0;
+      width: fit-content;
+      transition: transform 0.3s ease;
+    }
+
+    .userInner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem;
+      width: fit-content;
+    }
+
+    .userHeader,
+    .userInfo,
+    .nameRatingCont {
+      display: contents;
+    }
+
+    .rating,
+    .userDescList,
+    .userDescGrid,
+    .userApps {
+      display: none;
+    }
+
+    .userIcon {
+      display: inline-block;
+    }
+
+    .userName {
+      width: 6rem;
+      text-align: center;
+    }
+
+    .actionMenuBtn {
+      top: -0.5rem;
+      right: -0.75rem;
+      align-self: flex-start;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s, transform 0.25s ease;
+
+      .dot {
+        width: 4px;
+        height: 4px;
+      }
+    }
+
+    .userIcon {
+      transition: transform 0.3s ease;
+    }
+
+    .user:hover {
+      transform: scale(1.01);
+    }
+
+    .user:has(.actionMenuBtn[data-open="true"]) {
+      transform: scale(1.01);
+    }
+
+    .user:hover .userIcon {
+      transform: scale(1.05);
+    }
+
+    .user:has(.actionMenuBtn[data-open="true"]) .userIcon {
+      transform: scale(1.05);
+    }
+
+    .user:active .userIcon {
+      transform: scale(1.03);
+    }
+
+    .user:hover .actionMenuBtn {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      transition-delay: 0s;
+    }
+
+    .user:has(.actionMenuBtn:active),
+    .user:has(.actionMenuItem:active) {
+      transform: none !important;
+    }
+
+    .user:has(.actionMenuBtn:active) .userIcon,
+    .user:has(.actionMenuItem:active) .userIcon {
+      transform: scale(1.05) !important;
+    }
+
+    .actionMenuBtn[data-open="true"] {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      transition-delay: 0s;
+      transform: scale(1.08);
+    }
+  }
+}
+
+.usersCont {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 6rem;
+  column-gap: 4.5rem;
+  margin: 0 2rem 0 1rem;
+  padding-bottom: 2rem;
+}
+
+.user {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  max-width: 450px;
+  transition: transform 0.4s ease;
+}
+
+@container (min-width: 1200px) {
+  .user {
+    width: 29%;
+  }
+}
+
+.userInner {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.user:hover {
+  transform: scale(1.02);
+  transition: transform 0.4s ease;
+}
+
+.user:has(.userApp:active) {
+  transform: scale(1.02) !important;
+}
+
+.user:has(.actionMenu.show) {
+  z-index: 20;
+}
+
+.user:has(.actionMenuBtn:active),
+.user:has(.actionMenu:active) {
+  transform: scale(1.02) !important;
+}
+
+.user:active {
+  transform: scale(1.01);
+  transition: transform 0.2s ease;
+}
+
+.userHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.userIcon {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.nameRatingCont {
+  display: contents;
+}
+
+.userName {
+  width: calc(100% - 2rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.userDescList {
+  display: none;
+}
+
+.userDescGrid {
+  height: calc(2 * 1.3rem);
+  margin: 0.75rem 0 1.75rem 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3rem;
+  -webkit-line-clamp: 2;
+  font-size: 0.9rem;
+}
+
+.userApps {
+  display: flex;
+  flex-shrink: 0;
+  gap: 1rem;
+}
+
+.noApps {
+  height: 3.25rem;
+  line-height: 3.25rem;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.userApp {
+  flex-shrink: 0;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.userApp:hover {
+  transform: scale(1.03);
+  transition: transform 0.3s;
+}
+
+.userApp:active {
+  transform: scale(1.01);
+  transition: transform 0.2s;
+}
+
+.userApp img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  position: relative;
+  width: 3.25rem;
+  height: 3.25rem;
+  z-index: 5;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: linear-gradient(to bottom right,
+      #6665 0%,
+      #8888 25%,
+      #fff8 50%,
+      #8888 75%,
+      #6665 100%);
+}
+
+.placeholder .inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: linear-gradient(to right bottom,
+      #f0f8fd03 12%,
+      #dcf4fc21 21%,
+      #caeefb33 27%,
+      #d9f3fc00 38%,
+      #edf9fe03 51%,
+      #f8fdff33 58%,
+      #caeefb03 65%,
+      #ffffff03 75%,
+      #ffffff00 84%,
+      #ffffff22 100%);
+}
+
+.placeholder .inner span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.95rem;
+  line-height: 1;
+  z-index: 99;
+}
+
+.placeholder::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 0.2rem);
+  height: calc(100% - 0.2rem);
+  border-radius: 0.4rem;
+  background-color: #00091a;
+}
+
+.actionMenuBtn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: scale(1.08);
+    transition: transform 0.25s ease;
+  }
+
+  &:active {
+    transform: scale(1.03);
+    transition: transform 0.15s ease;
+  }
+}
+
+.actionMenuBtn .dot {
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+  min-height: 5px;
+  max-width: 5px;
+  max-height: 5px;
+  background: linear-gradient(to right bottom,
+      #00ffff 5%,
+      #14c8ee 40%,
+      #0b8de3 85%,
+      #0251d8 100%);
+  border-radius: 50%;
+}
+
+.actionMenu {
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  padding: 0.6rem 0.7rem;
+  border-radius: 1rem;
+  box-shadow: 1px 0 5px #00091abb;
+  transition: opacity 0.3s ease, visibility 0.3s;
+  will-change: opacity, transform;
+  z-index: 9999;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 1.5px * 2);
+    height: calc(100% - 1.5px * 2);
+    background-color: #00091a;
+    border-radius: 1rem;
+    z-index: -1;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right bottom,
+        var(--gradient-primary-colors));
+    border-radius: 1rem;
+    z-index: -2;
+  }
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.actionMenuItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  transition: opacity 0.2s ease;
+
+  span {
+    margin-right: 1rem;
+    white-space: nowrap;
+    font-size: 1rem;
+  }
+
+  img {
+    width: 1.25rem;
+    height: auto;
+    object-fit: contain;
+  }
+
+  &:hover {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+}
+
+.actionMenuItem:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.actionMenuItem .label,
+.actionMenuItem .icon {
+  transition: opacity 0.3s ease, color 0.3s ease, font-weight 0.2s ease;
+}
+
+.actionMenuItem.active .label {
+  color: #888;
+  font-size: 0.84rem;
+  font-weight: bold;
+}
+
+.fadeOut {
+  opacity: 0;
+}
+
+.fadeIn {
+  opacity: 1;
+}
+
+.blockBtn {
+  color: #dc2626;
+}
+
+.blockBtn img {
+  filter: brightness(0) saturate(100%) invert(29%) sepia(29%) saturate(5530%) hue-rotate(346deg) brightness(89%) contrast(94%);
+}

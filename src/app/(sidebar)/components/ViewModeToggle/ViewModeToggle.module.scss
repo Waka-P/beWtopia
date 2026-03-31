@@ -1,0 +1,35 @@
+.root {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  opacity: 0.55;
+  transition:
+    opacity 0.24s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+
+.icon {
+  width: 30px;
+  height: auto;
+  margin: 5px;
+}

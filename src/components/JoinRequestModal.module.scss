@@ -1,0 +1,130 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 2rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.textarea {
+  --gradient-angle: 135deg;
+  resize: none;
+  width: 100%;
+  height: 150px;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1.9px solid transparent;
+  outline: none;
+  color: white;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(var(--gradient-angle),
+      #0ff,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9,
+      #0ff4,
+      #0ff9) border-box;
+  transition: --gradient-angle 0.5s ease;
+  border-radius: 0.25rem;
+  outline: none;
+
+  &::placeholder {
+    color: #888;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1.5px solid var(--cyan-border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.charCount {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.error {
+  padding: 12px;
+  background: rgba(255, 70, 70, 0.1);
+  border: 1px solid rgba(255, 70, 70, 0.3);
+  border-radius: 6px;
+  color: #ff6b6b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.button {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s;
+  border: none;
+  letter-spacing: .03em;
+
+  &:hover:not(:disabled) {
+    opacity: .85;
+    transform: scale(1.02);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(1.01);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.cancelButton {}
+
+.submitButton {
+  background: linear-gradient(to right bottom, var(--gradient-primary-colors));
+  font-weight: 700;
+}

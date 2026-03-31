@@ -1,0 +1,169 @@
+:global(.mentionNode) {
+  color: #0ff;
+  background: #0ff2;
+  border-radius: 9999px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+:global(.mentionNodeInteractive) {
+  cursor: pointer;
+  transition: text-decoration-color 0.15s ease;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+}
+
+:global(.mentionNodeInteractive:hover) {
+  text-decoration-color: #7ee7ff;
+}
+
+:global(.mentionSuggestion) {
+  position: absolute;
+  min-width: 220px;
+  max-width: 280px;
+  max-height: 240px;
+  overflow-y: auto;
+  background: #00091A;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#00091a, #00091a) padding-box,
+    linear-gradient(135deg, var(--gradient-primary-colors)) border-box;
+  border-radius: 10px;
+  padding: 6px;
+  z-index: 9999;
+}
+
+:global(.mentionItem) {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #f4fbff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  border-radius: 8px;
+  padding: 8px 9px;
+  cursor: pointer;
+}
+
+:global(.mentionItem:hover),
+:global(.mentionItem.isActive) {
+  background: #131821;
+}
+
+:global(.mentionAvatar) {
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d1f36;
+  flex-shrink: 0;
+}
+
+:global(.mentionAvatarImg) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+:global(.mentionAvatarInitial) {
+  font-size: 12px;
+  font-weight: 700;
+  color: #8eefff;
+}
+
+:global(.mentionLabel) {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+:global(.mentionEmpty) {
+  padding: 10px;
+  color: #96a8b4;
+  font-size: 12px;
+}
+
+:global(.mentionPreviewCard) {
+  width: 200px;
+  border: 1px solid #0fa9d3;
+  border-radius: 12px;
+  background: #020816;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.48);
+  padding: 10px;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+:global(.mentionPreviewCard.isVisible) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+:global(.mentionPreviewMain) {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #f4fbff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+:global(.mentionPreviewAvatar) {
+  width: 40px;
+  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
+  flex-shrink: 0;
+}
+
+:global(.mentionPreviewBody) {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+:global(.mentionPreviewName) {
+  color: #f4fbff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+:global(.mentionPreviewRating) {
+  display: inline-flex;
+  align-items: center;
+}
+
+:global(.mentionPreviewLoading) {
+  color: #96a8b4;
+  font-size: 11px;
+}
+
+:global(.mentionPreviewAction) {
+  width: 100%;
+  margin-top: 8px;
+  border: 1px solid #10c9ec;
+  border-radius: 8px;
+  background: transparent;
+  color: #a9f8ff;
+  padding: 6px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+:global(.mentionPreviewAction:hover) {
+  background: rgba(16, 201, 236, 0.12);
+}

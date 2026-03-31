@@ -1,0 +1,14 @@
+export { default as Bewt } from "../icons/Bewt";
+export { default as BewtActive } from "../icons/BewtActive";
+export { default as Bewts } from "../icons/Bewts";
+export { default as BewtsActive } from "../icons/BewtsActive";
+export { default as Chat } from "../icons/Chat";
+export { default as ChatActive } from "../icons/ChatActive";
+export { default as Notif } from "../icons/Notif";
+export { default as NotifActive } from "../icons/NotifActive";
+export { default as Request } from "../icons/Requests";
+export { default as RequestActive } from "../icons/RequestsActive";
+export { default as Search } from "../icons/Search";
+export { default as SearchActive } from "../icons/SearchActive";
+export { default as Top } from "../icons/Top";
+export { default as TopActive } from "../icons/TopActive";

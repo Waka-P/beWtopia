@@ -1,0 +1,68 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.header {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: center;
+}
+
+.logo {
+  width: 300px;
+  height: auto;
+  margin-bottom: 6rem;
+}
+
+.title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.message {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #888;
+}
+
+.link {
+  color: var(--accent);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.formArea {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  flex: 1;
+}
+
+.currInput {
+  top: 15%;
+  opacity: 1;
+}
+
+.prevPassInput {
+  top: -35%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+}
+
+.errorInput {
+  z-index: 1001;
+  top: 15%;
+  opacity: 1;
+}

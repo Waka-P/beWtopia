@@ -1,0 +1,39 @@
+.errorOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background-color: #000d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorModalWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem 2rem;
+  pointer-events: none;
+}
+
+.errorIcon {
+  width: 60px;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+.errorTitle {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--error);
+}
+
+.errorMessage {
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #888;
+  text-align: center;
+}

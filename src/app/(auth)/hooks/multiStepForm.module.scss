@@ -1,0 +1,49 @@
+.inputBase {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.inputBase::placeholder {
+  color: #bbb;
+}
+
+.currInput {
+  top: 50%;
+  opacity: 1;
+}
+
+.nextInput {
+  top: 100%;
+  opacity: 0;
+}
+
+.prevInput {
+  transform: translate(-50%, -50%) scale(0.8);
+  cursor: pointer;
+
+  button {
+    opacity: 0;
+  }
+}
+
+.prevPassInput {
+  top: 14rem;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+}
+
+.errorInput {
+  z-index: 1001;
+  top: 50%;
+  opacity: 1;
+}
+
+.pI1 {
+  top: 14rem;
+}
+
+.pI2 {
+  top: 15.5rem;
+}
